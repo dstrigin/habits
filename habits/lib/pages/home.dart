@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.cyan,
         elevation: 0.0,
         centerTitle: true,
+        toolbarHeight: 65,
       ),
     );
   }
