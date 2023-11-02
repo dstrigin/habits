@@ -6,7 +6,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          'habits.', 
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 32,
+            fontWeight: FontWeight.bold 
+          ),
+        ),
+        backgroundColor: Colors.cyan,
+        elevation: 0.0,
+        centerTitle: true,
+      ),
     );
   }
 }
