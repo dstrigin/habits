@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "266360988049",
+    "firebase_url": "https://habits-161e7-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "habits-161e7",
+    "storage_bucket": "habits-161e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266360988049:android:86855b7e17113ad3267a30",
+        "android_client_info": {
+          "package_name": "com.example.habits"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB7v7pMU0xehNyeT7DTqRiLjEOFQKr408"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
