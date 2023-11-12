@@ -25,45 +25,54 @@ class HomePageWithNavigationBar extends StatefulWidget {
 }
 
 class _HomePageWithNavigationBarState extends State<HomePageWithNavigationBar> {
-  int _currentIndex = 3;
+  int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: const HomePage(),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: Colors.cyan,
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sunny),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timelapse),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_open),
-            label: '',
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Действие при нажатии на кнопку
         },
+        backgroundColor: Colors.lightBlue,
+        child: Icon(Icons.add, size: 32),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: Colors.cyan,
+          currentIndex: _currentIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.sunny),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.timelapse),
+              label: '',
+            ),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_open),
+              label: '',
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+                _currentIndex = index;
+            });
+          },
+        ),
       ),
     );
   }
