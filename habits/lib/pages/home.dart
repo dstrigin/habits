@@ -14,18 +14,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: appBar(),
         body: ListView(
-          padding: const EdgeInsets.only(top: 5, bottom: 5),
+          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 7, right: 7),
           scrollDirection: Axis.vertical,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 10),
               child: SvgPicture.asset(
                   'assets/icons/hp_bar.svg',
-                  alignment: Alignment.center
+                  alignment: Alignment.center,
+                  width: 50,
+                  height: 30
               ),
             ),
+            const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                'Ваши привычки: ',
+                locale: Locale('ru'),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 30
+                ),
+              )
+            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset(
                   'assets/icons/cigarette.svg',
@@ -37,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                   'Курение',
                   locale: Locale('ru'),
                   style: TextStyle(
-                    fontSize: 25
+                    fontSize: 30
                   ),
                 ),
                 IconButton(
@@ -49,27 +62,8 @@ class _HomePageState extends State<HomePage> {
                       height: 50
                     ),
                 )
-
               ],
             ),
-            Container(
-                width: 10,
-                height: 50,
-                padding: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black)
-                ),
-                child: const Text(
-                  'Habit #1',
-                  textDirection: TextDirection.ltr,
-                  style: TextStyle(
-                    fontSize: 30
-                  ),
-                )
-            )
           ],
         )
     );
