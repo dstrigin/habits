@@ -26,17 +26,6 @@ class _HomePageState extends State<HomePage> {
                   height: 30
               ),
             ),
-            const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                'Ваши привычки: ',
-                locale: Locale('ru'),
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 30
-                ),
-              )
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
