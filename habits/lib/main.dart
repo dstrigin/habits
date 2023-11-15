@@ -1,8 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:habits/firebase_options.dart';
 import 'package:habits/pages/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -42,11 +48,11 @@ class _HomePageWithNavigationBarState extends State<HomePageWithNavigationBar> {
           // Действие при нажатии на кнопку
         },
         backgroundColor: Colors.lightBlue,
-        child: Icon(Icons.add, size: 32),
+        child: const Icon(Icons.add, size: 32),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,

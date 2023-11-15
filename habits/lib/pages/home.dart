@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                     onPressed: (){
                       showDialog(context: context, builder: (BuildContext context){
-                        return AlertDialog(
+                        return const AlertDialog(
                           content: Text('Употребление никотина(табак, электронные сигареты) сильно влияют на дыхательную систему и разрушают легкие.'),
                         );
 
