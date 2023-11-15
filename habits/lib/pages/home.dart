@@ -43,13 +43,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 IconButton(
-                    onPressed: null,
+                    onPressed: (){
+                      showDialog(context: context, builder: (BuildContext context){
+                        return AlertDialog(
+                          content: Text('Употребление никотина(табак, электронные сигареты) сильно влияют на дыхательную систему и разрушают легкие.'),
+                        );
+
+                      });
+                    },
                     icon: SvgPicture.asset(
                       'assets/icons/info.svg',
                       alignment: Alignment.centerRight,
                       width: 50,
                       height: 50
                     ),
+
                 )
               ],
             ),
