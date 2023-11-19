@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -9,8 +10,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+    void initFirebase() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp();
+    }
+
   @override
   Widget build(BuildContext context) {
+      initFirebase();
     return Scaffold(
         appBar: appBar(),
         body: ListView(
