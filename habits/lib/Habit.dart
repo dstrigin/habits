@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
+
+part 'Habit.g.dart';
+
 @HiveType(typeId: 1)
 class Habit extends HiveObject{
   @HiveField(0)
@@ -19,17 +22,17 @@ class Habit extends HiveObject{
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'description': description,
-        'type': type,
-        'damage': damage,
+    'id': id,
+    'description': description,
+    'type': type,
+    'damage': damage,
   };
 
   static Habit fromJson(Map<String, dynamic> json) => Habit(
-    id: json['id'],
-    description: json['description'],
-    type: json['type'],
-    damage: json['damage']
+      id: json['id'],
+      description: json['description'],
+      type: json['type'],
+      damage: json['damage']
   );
 }
 
