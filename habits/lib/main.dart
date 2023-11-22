@@ -2,7 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:habits/firebase_options.dart';
 import 'package:habits/pages/home.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:habits/pages/documentation.dart';
+import 'package:habits/pages/history.dart';
+import 'package:habits/pages/add_habit.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,67 +28,113 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Bahnschrift'),
-        home: const HomePageWithNavigationBar()
+        home: const homeNavyBar()
     );
   }
 }
-class HomePageWithNavigationBar extends StatefulWidget {
-  const HomePageWithNavigationBar({Key? key}) : super(key: key);
 
-  @override
-  _HomePageWithNavigationBarState createState() => _HomePageWithNavigationBarState();
-}
-
-class _HomePageWithNavigationBarState extends State<HomePageWithNavigationBar> {
-  int _currentIndex = 2;
+class homeNavyBar extends StatelessWidget {
+  const homeNavyBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const HomePage(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Действие при нажатии на кнопку
-        },
-        backgroundColor: Colors.lightBlue,
-        child: const Icon(Icons.add, size: 32),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          backgroundColor: Colors.cyan,
-          currentIndex: _currentIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.sunny),
-              label: '',
+    
+    List<Widget> _buildScreens() {
+        return [
+          const HomePage(),
+          const HistoryPage(),
+          const AddHabitPage(),
+          const Screen4(),
+          const DocumentationPage(),
+        ];
+    }
+
+    List<PersistentBottomNavBarItem> _navBarsItems() {
+        return [
+            
+            PersistentBottomNavBarItem(
+                icon: const Icon(Icons.home),
+                title: ("Home"),
+                activeColorPrimary: Colors.blue,
+                inactiveColorPrimary: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.timelapse),
-              label: '',
+            
+            PersistentBottomNavBarItem(
+                icon: const Icon(Icons.history),
+                title: ("History"),
+                activeColorPrimary: Colors.blue,
+                inactiveColorPrimary: Colors.grey,
+            ),
+            
+            PersistentBottomNavBarItem(
+                icon: const Icon(Icons.add, color: Colors.white),
+                inactiveIcon: const Icon(Icons.add, color: Colors.white),
+                activeColorPrimary: Colors.blue,
+                inactiveColorPrimary: Colors.grey,
+            ),
+            
+            PersistentBottomNavBarItem(
+                icon: const Icon(Icons.home),
+                title: ("Home"),
+                activeColorPrimary: Colors.blue,
+                inactiveColorPrimary: Colors.grey,
             ),
 
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: '',
+            PersistentBottomNavBarItem(
+                icon: const Icon(Icons.book),
+                title: ("Doc"),
+                activeColorPrimary: Colors.blue,
+                inactiveColorPrimary: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_open),
-              label: '',
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-                _currentIndex = index;
-            });
-          },
+        ];
+    }
+
+    PersistentTabController _controller;
+    _controller = PersistentTabController(initialIndex: 0);
+    
+    return PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        backgroundColor: Colors.white,
+        handleAndroidBackButtonPress: true,
+        resizeToAvoidBottomInset: true,
+        stateManagement: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
         ),
-      ),
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
+        navBarStyle: 
+          NavBarStyle.style15,
+    );
+  }
+}
+
+class Screen4 extends StatelessWidget {
+  const Screen4({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'Screen4',
+          style: TextStyle(fontSize: 30),
+      ))
     );
   }
 }
