@@ -67,8 +67,8 @@ class homeNavyBar extends StatelessWidget {
             ),
             
             PersistentBottomNavBarItem(
-                icon: const Icon(Icons.add, color: Colors.white),
-                inactiveIcon: const Icon(Icons.add, color: Colors.white),
+                icon: const Icon(Icons.add, color: Colors.blue),
+                inactiveIcon: const Icon(Icons.add, color: Colors.grey),
                 activeColorPrimary: Colors.blue,
                 inactiveColorPrimary: Colors.grey,
             ),
@@ -119,7 +119,7 @@ class homeNavyBar extends StatelessWidget {
           duration: Duration(milliseconds: 200),
         ),
         navBarStyle: 
-          NavBarStyle.style15,
+          NavBarStyle.style9,
     );
   }
 }
