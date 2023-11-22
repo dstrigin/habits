@@ -28,7 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cloud_firestore:
+  cloud_firestore: ^4.13.2
   flutter:
     sdk: flutter
 
@@ -39,6 +39,8 @@ dependencies:
 
   flutter_svg: ^2.0.8
   firebase_core:
+  firebase_storage: ^11.5.2
+  firebase_database: ^10.3.5
 
 dev_dependencies:
   flutter_test:
