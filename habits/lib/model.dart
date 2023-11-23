@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
+
 @HiveType(typeId: 1)
 class Habit extends HiveObject{
   @HiveField(0)
@@ -32,4 +33,3 @@ class Habit extends HiveObject{
     damage: json['damage']
   );
 }
-

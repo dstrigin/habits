@@ -7,8 +7,7 @@ import 'package:habits/boxes.dart';
 import 'home.dart';
 import 'package:hive/hive.dart';
 import 'package:habits/Habit.dart';
-
-
+import 'package:habits/elements/appBars.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key});
@@ -48,7 +47,7 @@ class _AddHabitState extends State<AddHabit> {
   Widget build(BuildContext context) {
     initFirebase();
     return Scaffold(
-      appBar: appBar(),
+      appBar: homeAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -58,7 +57,10 @@ class _AddHabitState extends State<AddHabit> {
                 if (snapshot.hasError) {
                   return Text('Ошибка: ${snapshot.error}');
                 } else if (snapshot.data == null) {
-                  return Text('Нет данных о привычках');
+                  return const Text(
+                    'Нет данных о привычках',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30));
                 } else {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
@@ -79,8 +81,8 @@ class _AddHabitState extends State<AddHabit> {
                           ),
                           Text(
                             habit.id,
-                            locale: Locale('ru'),
-                            style: TextStyle(
+                            locale: const Locale('ru'),
+                            style: const TextStyle(
                               fontSize: 30,
                             ),
                           ),
@@ -92,8 +94,10 @@ class _AddHabitState extends State<AddHabit> {
                                           id:habit.id,
                                           description:habit.description,
                                           damage:habit.damage,
-                                          type:habit.type));
-                                });
+                                          type:habit.type)
+                                  );
+                                }
+                                );
                               },
                               icon: const Icon(Icons.add)),
                           IconButton(
