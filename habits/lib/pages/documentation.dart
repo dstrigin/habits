@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habits/elements/appBars.dart';
 
 class DocumentationPage extends StatelessWidget {
   const DocumentationPage ({super.key});
@@ -34,21 +35,4 @@ class DocumentationPage extends StatelessWidget {
       )
     );
   }
-}
-
-AppBar docAppBar() {
-  return AppBar(
-        title: const Text(
-          'documentation.', 
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold 
-          ),
-        ),
-      backgroundColor: Colors.cyan,
-      elevation: 0.0,
-      centerTitle: true,
-      toolbarHeight: 65,
-  );
 }
