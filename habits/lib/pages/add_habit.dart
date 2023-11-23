@@ -83,7 +83,7 @@ class _AddHabitState extends State<AddHabit> {
                             habit.id,
                             locale: const Locale('ru'),
                             style: const TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                             ),
                           ),
                           IconButton(
@@ -106,6 +106,7 @@ class _AddHabitState extends State<AddHabit> {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
+                                    title: const Text('Описание привычки',style: TextStyle(fontWeight: FontWeight.bold),),
                                     content: Text(habit.description),
                                   );
                                 },
