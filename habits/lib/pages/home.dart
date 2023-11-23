@@ -21,25 +21,36 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: homeAppBar(),
-      body: ListView.builder(
-          itemCount: boxHabits.length,
-          itemBuilder: (context, index){
-              Habit hab = boxHabits.getAt(index);
-            return ListTile(
-              title: Text(hab.id.toString()),
-              leading: IconButton(
-                onPressed: (){
-                  setState(() {
-                    boxHabits.delete(hab.key);
-                    }
-                  );
-                },
-                icon: const Icon(Icons.delete),
-              ),
-              //leading: IconButton,
+      body:ValueListenableBuilder(
+        valueListenable: Hive.box<Habit>('boxHabits').listenable(),
+        builder: (context, Box<Habit> box, _){
+          if (box.values.isEmpty) {
+            return const Center(
+              child: Text('Вы не добавили ни одной привычки.'),
             );
           }
+          return ListView.builder(
+              itemCount: box.values.length,
+              itemBuilder: (context, index){
+                Habit? hab = box.getAt(index);
+                return ListTile(
+                  title: Text(hab!.id.toString()),
+                  leading: IconButton(
+                    onPressed: (){
+                      setState(() {
+                        boxHabits.delete(hab.key);
+                      }
+                      );
+                    },
+                    icon: const Icon(Icons.delete),
+                  ),
+                  //leading: IconButton,
+                );
+              }
+          );
+        },
       )
+
     );
   }
 }
