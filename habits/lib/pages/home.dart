@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-  
+import 'package:habits/boxes.dart';
+import 'package:habits/Habit.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:habits/elements/appBars.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -12,83 +16,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-    void initFirebase() async {
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp();
-    }
-
   @override
   Widget build(BuildContext context) {
-      initFirebase();
+
     return Scaffold(
-        appBar: appBar(),
-        body: ListView(
-          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 7, right: 7),
-          scrollDirection: Axis.vertical,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 10),
-              child: SvgPicture.asset(
-                  'assets/icons/hp_bar.svg',
-                  alignment: Alignment.center,
-                  width: 50,
-                  height: 30
+      appBar: homeAppBar(),
+      body: ListView.builder(
+          itemCount: boxHabits.length,
+          itemBuilder: (context, index){
+              Habit hab = boxHabits.getAt(index);
+            return ListTile(
+              title: Text(hab.id.toString()),
+              leading: IconButton(
+                onPressed: (){
+                  setState(() {
+                    boxHabits.delete(hab.key);
+                    }
+                  );
+                },
+                icon: const Icon(Icons.delete),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/cigarette.svg',
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.centerLeft,
-                ),
-                const Text(
-                  'Курение',
-                  locale: Locale('ru'),
-                  style: TextStyle(
-                    fontSize: 30
-                  ),
-                ),
-                IconButton(
-                    onPressed: (){
-                      showDialog(context: context, builder: (BuildContext context){
-                        return const AlertDialog(
-                          content: Text('Употребление никотина(табак, электронные сигареты) сильно влияют на дыхательную систему и разрушают легкие.'),
-                        );
-
-                      });
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/info.svg',
-                      alignment: Alignment.centerRight,
-                      width: 50,
-                      height: 50
-                    ),
-
-                )
-              ],
-            ),
-          ],
-        )
+              //leading: IconButton,
+            );
+          }
+      )
     );
   }
-}
-
-AppBar appBar() {
-  return AppBar(
-        title: const Text(
-          'habits.', 
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold 
-          ),
-        ),
-      backgroundColor: Colors.cyan,
-      elevation: 0.0,
-      centerTitle: true,
-      toolbarHeight: 65,
-  );
 }
