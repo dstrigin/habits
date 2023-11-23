@@ -70,56 +70,48 @@ class _AddHabitState extends State<AddHabit> {
                     itemCount: snapshot.data!.length, // Используйте snapshot.data!
                     itemBuilder: (context, index) {
                       Habit habit = snapshot.data![index]; // Используйте snapshot.data!
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/icons/cigarette.svg',
-                            width: 40,
-                            height: 40,
-                            alignment: Alignment.centerLeft,
-                          ),
-                          Text(
-                            habit.id,
-                            locale: const Locale('ru'),
-                            style: const TextStyle(
-                              fontSize: 25,
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () async {
-                                setState(() {
-                                  boxHabits.put('key_${habit.id.toString()}',
-                                      Habit(
-                                          id:habit.id,
-                                          description:habit.description,
-                                          damage:habit.damage,
-                                          type:habit.type)
-                                  );
-                                }
+                      return ListTile(
+                        leading: SvgPicture.asset(
+                          'assets/icons/cigarette.svg',
+                          width: 40,
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                        ),
+                        title: Text(habit.id.toString()),
+                        onTap: () {
+                             showDialog(
+                              context: context,
+                              builder: (BuildContext context){
+                                return AlertDialog(
+                                  title: const Text('Описание привычки', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  content: Text(habit.description),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () async{
+                                        setState(() {
+                                          boxHabits.put('key_${habit.id.toString()}',
+                                              Habit(
+                                                  id:habit.id,
+                                                  description:habit.description,
+                                                  damage:habit.damage,
+                                                  type:habit.type)
+                                          );
+                                        });
+                                      },
+                                      child:const  Text('Добавить'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Закрыть'),
+                                    ),
+                                  ],
+
                                 );
-                              },
-                              icon: const Icon(Icons.add)),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Описание привычки',style: TextStyle(fontWeight: FontWeight.bold),),
-                                    content: Text(habit.description),
-                                  );
-                                },
-                              );
-                            },
-                            icon: SvgPicture.asset(
-                              'assets/icons/info.svg',
-                              alignment: Alignment.centerRight,
-                              width: 50,
-                              height: 50,
-                            ),
-                          ),
-                        ],
+                              }
+                            );
+                        }
                       );
                     },
                   );
