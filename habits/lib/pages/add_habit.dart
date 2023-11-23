@@ -38,14 +38,10 @@ Future<List<Habit>> getHabits() async {
 }
 
 class _AddHabitState extends State<AddHabit> {
-  void initFirebase() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    initFirebase();
     return Scaffold(
       appBar: homeAppBar(),
       body: Column(
@@ -107,6 +103,7 @@ class _AddHabitState extends State<AddHabit> {
                                       child: Text('Закрыть'),
                                     ),
                                   ],
+                                  alignment: Alignment.centerLeft,
 
                                 );
                               }
