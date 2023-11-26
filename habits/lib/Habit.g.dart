@@ -21,13 +21,14 @@ class HabitAdapter extends TypeAdapter<Habit> {
       description: fields[1] as String,
       type: fields[2] as bool,
       damage: fields[3] as double,
+      icon: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Habit obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..writeByte(2)
       ..write(obj.type)
       ..writeByte(3)
-      ..write(obj.damage);
+      ..write(obj.damage)
+      ..writeByte(4)
+      ..write(obj.icon);
   }
 
   @override

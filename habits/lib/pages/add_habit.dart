@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
-//import 'package:habits/model.dart';
-import 'home.dart';
-import 'package:hive/hive.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
 
@@ -68,7 +64,7 @@ class _AddHabitState extends State<AddHabit> {
                       Habit habit = snapshot.data![index]; // Используйте snapshot.data!
                       return ListTile(
                         leading: SvgPicture.asset(
-                          'assets/icons/cigarette.svg',
+                          'assets/icons/${habit.icon}.svg',
                           width: 40,
                           height: 40,
                           alignment: Alignment.centerLeft,
@@ -87,7 +83,7 @@ class _AddHabitState extends State<AddHabit> {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text('Закрыть'),
+                                      child: const Text('Закрыть'),
                                     ),
                                     ElevatedButton(
                                       onPressed: () async{
@@ -97,7 +93,9 @@ class _AddHabitState extends State<AddHabit> {
                                                   id:habit.id,
                                                   description:habit.description,
                                                   damage:habit.damage,
-                                                  type:habit.type)
+                                                  type:habit.type,
+                                                  icon:habit.icon,
+                                              )
                                           );
                                         });
                                       },
