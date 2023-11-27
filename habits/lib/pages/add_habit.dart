@@ -78,13 +78,6 @@ class _AddHabitState extends State<AddHabit> {
                                   title: const Text('Описание привычки', style: TextStyle(fontWeight: FontWeight.bold),),
                                   content: Text(habit.description),
                                   actions: [
-
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('Закрыть'),
-                                    ),
                                     ElevatedButton(
                                       onPressed: () async{
                                         setState(() {
@@ -97,13 +90,14 @@ class _AddHabitState extends State<AddHabit> {
                                                   icon:habit.icon,
                                               )
                                           );
+                                          Navigator.of(context).pop();
                                         });
                                       },
                                       child:const  Text('Добавить'),
                                     ),
                                   ],
 
-                                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                                  actionsAlignment: MainAxisAlignment.spaceAround,
                                 );
                               }
                             );
