@@ -3,43 +3,30 @@
 <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 width="800px" height="800px" viewBox="0 0 32 32" xml:space="preserve">
 <style type="text/css">
-	.cubies_twaalf{fill:#FFF2DF;}
-	.cubies_zesentwintig{fill:#65C3AB;}
-	.cubies_zevenentwintig{fill:#98D3BC;}
-	.cubies_achtentwintig{fill:#CCE2CD;}
-	.cubies_elf{fill:#E3D4C0;}
-	.st0{fill:#F2C99E;}
-	.st1{fill:#F9E0BD;}
-	.st2{fill:#C9483A;}
-	.st3{fill:#D97360;}
-	.st4{fill:#EDB57E;}
-	.st5{fill:#4C4842;}
-	.st6{fill:#67625D;}
-	.st7{fill:#EDEAE5;}
-	.st8{fill:#C9C6C0;}
-	.st9{fill:#BCD269;}
-	.st10{fill:#A4C83F;}
-	.st11{fill:#837F79;}
-	.st12{fill:#EC9B5A;}
-	.st13{fill:#2EB39A;}
-	.st14{fill:#725A48;}
-	.st15{fill:#8E7866;}
-	.st16{fill:#E69D8A;}
-	.st17{fill:#65C3AB;}
-	.st18{fill:#A5A29C;}
-	.st19{fill:#D1DE8B;}
-	.st20{fill:#E8E8B5;}
+	.pictogram_een{fill:#F4D6B0;}
+	.pictogram_twee{fill:#F8AD89;}
+	.pictogram_vijf{fill:#01A59C;}
+	.pictogram_zes{fill:#0C6667;}
+	.st0{fill:#F27261;}
+	.st1{fill:#E54D2E;}
+	.st2{fill:none;}
+	.st3{fill:#F8AD89;}
+	.st4{clip-path:url(#SVGID_2_);fill:#01A59C;}
+	.st5{clip-path:url(#SVGID_2_);fill:none;}
+	.st6{clip-path:url(#SVGID_2_);fill:#0C6667;}
+	.st7{fill:#0C6667;}
 </style>
 <g>
-	<rect x="0" y="9" class="cubies_zevenentwintig" width="32" height="6"/>
-	<path class="cubies_elf" d="M29,0L3,0C1.343,0,0,1.343,0,3l0,6h32V3C32,1.343,30.657,0,29,0z"/>
-	<path class="cubies_twaalf" d="M27,0L3,0C1.343,0,0,1.343,0,3l0,6h30V3C30,1.343,28.657,0,27,0z"/>
-	<path class="cubies_zesentwintig" d="M29,32H3c-1.657,0-3-1.343-3-3V15h32v14C32,30.657,30.657,32,29,32z"/>
-	<path class="cubies_zevenentwintig" d="M27,32H3c-1.657,0-3-1.343-3-3V15h30v14C30,30.657,28.657,32,27,32z"/>
-	<rect x="0" y="9" class="cubies_achtentwintig" width="30" height="6"/>
-	<path class="cubies_zesentwintig" d="M14,9H2V3c0-0.552,0.448-1,1-1h10c0.552,0,1,0.448,1,1V9z M28,3c0-0.552-0.448-1-1-1H17
-		c-0.552,0-1,0.448-1,1v6h12V3z"/>
-	<path class="cubies_zevenentwintig" d="M13,9H2V3c0-0.552,0.448-1,1-1h9c0.552,0,1,0.448,1,1V9z M27,3c0-0.552-0.448-1-1-1h-9
-		c-0.552,0-1,0.448-1,1v6h11V3z"/>
+	<path class="pictogram_vijf" d="M32,29c0,1.65-1.35,3-3,3H3c-1.65,0-3-1.35-3-3V3c0-1.65,1.35-3,3-3h26c1.65,0,3,1.35,3,3V29z"/>
+	<path class="pictogram_een" d="M27,24H5c-1.657,0-3-1.343-3-3V9c0-1.657,1.343-3,3-3h22c1.657,0,3,1.343,3,3v12
+		C30,22.657,28.657,24,27,24z"/>
+	<path class="pictogram_twee" d="M7,18.794v1.971C7,22.716,7.615,24.519,8.651,26h14.699C24.385,24.519,25,22.716,25,20.765v-9.83
+		c0-5.017-4.025-9.085-8.991-9.085h-0.018C11.025,1.85,7,5.917,7,10.935v4.874c-0.793,0.039-1.426,0.689-1.426,1.493
+		S6.207,18.755,7,18.794z"/>
+	<path class="pictogram_zes" d="M29.519,31.947L16.005,32H2.964c-1.473,0-2.7-1.075-2.951-2.478L0,26h32v3
+		C32,30.471,30.923,31.697,29.519,31.947z M16,4c-3.866,0-7,3.134-7,7s3.134,7,7,7s7-3.134,7-7S19.866,4,16,4z"/>
+	<path class="pictogram_een" d="M18.567,15H14.03c-0.563,0-1.075-0.33-1.306-0.844c-0.232-0.513-0.141-1.116,0.232-1.537
+		l2.433-2.753H14.03c-0.791,0-1.433-0.642-1.433-1.433S13.239,7,14.03,7h4.537c0.563,0,1.075,0.33,1.306,0.844
+		c0.232,0.513,0.141,1.116-0.232,1.537l-2.433,2.753h1.359c0.791,0,1.433,0.642,1.433,1.433C20,14.358,19.358,15,18.567,15z"/>
 </g>
 </svg>
