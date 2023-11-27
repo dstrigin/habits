@@ -35,16 +35,35 @@ class _HomePageState extends State<HomePage> {
                 Habit? hab = box.getAt(index);
                 return ListTile(
                   title: Text(hab!.id.toString()),
-                  leading: IconButton(
-                    onPressed: (){
-                      setState(() {
-                        boxHabits.delete(hab.key);
-                      }
-                      );
-                    },
-                    icon: const Icon(Icons.delete),
+                  leading: SvgPicture.asset(
+                    'assets/icons/${hab.icon}.svg',
+                    width: 45,
+                    height: 45,
+                    alignment: Alignment.centerLeft,
                   ),
-                  //leading: IconButton,
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                              title: Text(hab.id.toString(), style:TextStyle(fontWeight: FontWeight.bold)),
+                            
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      boxHabits.delete(hab.key);
+                                    });
+                                    Navigator.of(context).pop();
+
+                                  },
+                                  child: const Icon(Icons.delete),
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },
                 );
               }
           );
