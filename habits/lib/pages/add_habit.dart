@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
-//import 'package:habits/model.dart';
-import 'home.dart';
-import 'package:hive/hive.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
 
@@ -53,10 +49,12 @@ class _AddHabitState extends State<AddHabit> {
                 if (snapshot.hasError) {
                   return Text('Ошибка: ${snapshot.error}');
                 } else if (snapshot.data == null) {
-                  return const Text(
-                    'Нет данных о привычках',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30));
+                  return const Center(
+                    child: Text(
+                      'Данные о привычках обновляются...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30))
+                      );
                 } else {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
@@ -68,12 +66,17 @@ class _AddHabitState extends State<AddHabit> {
                       Habit habit = snapshot.data![index]; // Используйте snapshot.data!
                       return ListTile(
                         leading: SvgPicture.asset(
-                          'assets/icons/cigarette.svg',
-                          width: 40,
-                          height: 40,
+                          'assets/icons/${habit.icon}.svg',
+                          width: 45,
+                          height: 45,
                           alignment: Alignment.centerLeft,
                         ),
-                        title: Text(habit.id.toString()),
+                        title: Text(
+                          habit.id.toString(),
+                          style: const TextStyle(
+                            fontSize: 22
+                            )
+                          ),
                         onTap: () {
                              showDialog(
                               context: context,
@@ -82,13 +85,6 @@ class _AddHabitState extends State<AddHabit> {
                                   title: const Text('Описание привычки', style: TextStyle(fontWeight: FontWeight.bold),),
                                   content: Text(habit.description),
                                   actions: [
-
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Закрыть'),
-                                    ),
                                     ElevatedButton(
                                       onPressed: () async{
                                         setState(() {
@@ -97,15 +93,18 @@ class _AddHabitState extends State<AddHabit> {
                                                   id:habit.id,
                                                   description:habit.description,
                                                   damage:habit.damage,
-                                                  type:habit.type)
+                                                  type:habit.type,
+                                                  icon:habit.icon,
+                                              )
                                           );
+                                          Navigator.of(context).pop();
                                         });
                                       },
                                       child:const  Text('Добавить'),
                                     ),
                                   ],
 
-                                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                                  actionsAlignment: MainAxisAlignment.spaceAround,
                                 );
                               }
                             );
