@@ -49,10 +49,12 @@ class _AddHabitState extends State<AddHabit> {
                 if (snapshot.hasError) {
                   return Text('Ошибка: ${snapshot.error}');
                 } else if (snapshot.data == null) {
-                  return const Text(
-                    'Нет данных о привычках',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30));
+                  return const Center(
+                    child: Text(
+                      'Данные о привычках обновляются...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30))
+                      );
                 } else {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
@@ -65,11 +67,16 @@ class _AddHabitState extends State<AddHabit> {
                       return ListTile(
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
-                          width: 40,
-                          height: 40,
+                          width: 45,
+                          height: 45,
                           alignment: Alignment.centerLeft,
                         ),
-                        title: Text(habit.id.toString()),
+                        title: Text(
+                          habit.id.toString(),
+                          style: const TextStyle(
+                            fontSize: 22
+                            )
+                          ),
                         onTap: () {
                              showDialog(
                               context: context,
