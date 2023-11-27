@@ -48,13 +48,20 @@ class _AddHabitState extends State<AddHabit> {
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text('Ошибка: ${snapshot.error}');
-                } else if (snapshot.data == null) {
+                } else if ( snapshot.hasData && snapshot.data == null) {
                   return const Center(
                     child: Text(
-                      'Данные о привычках обновляются...',
+                      'Данные о привычках отсутствуют',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 30))
                       );
+                } else if (snapshot.connectionState == ConnectionState.waiting){
+                  return const Center(
+                      child: Text(
+                          'Данные о привычках обновляются...',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 30))
+                  );
                 } else {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
