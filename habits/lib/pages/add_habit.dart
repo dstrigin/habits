@@ -89,7 +89,7 @@ class _AddHabitState extends State<AddHabit> {
                               context: context,
                               builder: (BuildContext context){
                                 return AlertDialog(
-                                  title: const Text('Описание привычки', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  title:  Text(habit.id.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
                                   content: Text(habit.description),
                                   actions: [
                                     ElevatedButton(
