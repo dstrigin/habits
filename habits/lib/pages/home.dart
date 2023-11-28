@@ -21,14 +21,17 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         
         children: [
-          
-          SvgPicture.asset(
-            'assets/icons/hp_bar.svg',
-            alignment: Alignment.center,
-            width: 50,
-            height: 30
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 7, bottom: 7, left: 5, right: 5
+            ),
+            child: SvgPicture.asset(
+              'assets/icons/hp_bar.svg',
+              alignment: Alignment.center,
+              width: 50,
+              height: 30,
+            ),
           ),
-          
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: Hive.box<Habit>('boxHabits').listenable(),
