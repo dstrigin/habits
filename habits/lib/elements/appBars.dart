@@ -51,3 +51,20 @@ AppBar histAppBar() {
       toolbarHeight: 65,
   );
 }
+
+AppBar factAppBar() {
+  return AppBar(
+        title: const Text(
+          'fact.', 
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 32,
+            fontWeight: FontWeight.bold 
+          ),
+        ),
+      backgroundColor: Colors.cyan,
+      elevation: 0.0,
+      centerTitle: true,
+      toolbarHeight: 65,
+  );
+}
