@@ -10,7 +10,8 @@ class HistoryPage extends StatelessWidget {
       appBar: histAppBar(),
       body: const Center(
         child: Text(
-          'History',
+          'Здесь будет отображаться история добавления вами привычек',
+          textAlign: TextAlign.center,
           style: TextStyle(fontSize: 30),
         )
       )
