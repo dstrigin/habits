@@ -16,79 +16,83 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: homeAppBar(),
       body: Column(
-    children: [
-      SvgPicture.asset(
-          'assets/icons/hp_bar.svg',
-          alignment: Alignment.center,
-          width: 50,
-          height: 30
-      ),
-      Expanded(
-      child: ValueListenableBuilder(
-        valueListenable: Hive.box<Habit>('boxHabits').listenable(),
-        builder: (context, Box<Habit> box, _){
-          if (box.values.isEmpty) {
-            return const Center(
-              child: Text(
-                'Вы не добавили ни одной привычки.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
-              ),
-            );
-          }
-          return ListView.builder(
-              padding: const EdgeInsets.only(
-                top: 7, bottom: 7, left: 5, right: 5
-              ),
-              itemCount: box.values.length,
-              itemBuilder: (context, index){
-                Habit? hab = box.getAt(index);
-                return ListTile(
-                  title: Text(
-                    hab!.id.toString(),
-                    style: const TextStyle(fontSize: 24),
+        
+        children: [
+          
+          SvgPicture.asset(
+            'assets/icons/hp_bar.svg',
+            alignment: Alignment.center,
+            width: 50,
+            height: 30
+          ),
+          
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<Habit>('boxHabits').listenable(),
+              builder: (context, Box<Habit> box, _){
+                if (box.values.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'Вы не добавили ни одной привычки.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.only(
+                    top: 7, bottom: 7, left: 5, right: 5
                   ),
-                  leading: SvgPicture.asset(
-                    'assets/icons/${hab.icon}.svg',
-                    width: 50,
-                    height: 50,
-                    alignment: Alignment.centerLeft,
-                  ),
-                  onTap: () {
-                    showDialog(
+                  itemCount: box.values.length,
+                  itemBuilder: (context, index){
+                    Habit? hab = box.getAt(index);
+                    return ListTile(
+                      title: Text(
+                        hab!.id.toString(),
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                      leading: SvgPicture.asset(
+                        'assets/icons/${hab.icon}.svg',
+                        width: 50,
+                        height: 50,
+                        alignment: Alignment.centerLeft,
+                      ),
+                    onTap: () {
+                      showDialog(
                         context: context,
                         builder: (BuildContext context){
                           return AlertDialog(
-                              title: Text(hab.id.toString(), style: const TextStyle(
-                                fontWeight: FontWeight.bold)
+                              title: Text(
+                                hab.id.toString(), 
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold
+                                )
                               ),
-                            actions: [
-                              ElevatedButton(
+                              actions: [
+                                ElevatedButton(
                                   onPressed: () async {
                                     setState(() {
                                       boxHabits.delete(hab.key);
                                     });
                                     Navigator.of(context).pop();
-
                                   },
                                   child: const Icon(Icons.delete),
-                              )
-                            ],
+                                )
+                              ],
                           );
                         }
+                      );
+                    },
                     );
-                  },
+                  }
                 );
-              }
-          );
-        },
-      ),
-    ),
-    ],
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

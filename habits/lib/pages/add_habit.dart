@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,7 +29,9 @@ Future<List<Habit>> getHabits() async {
       Habit habit = Habit.fromJson(data);
       habits.add(habit);
     }
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     print('Ошибка при получении привычек: $error');
   }
   return habits;

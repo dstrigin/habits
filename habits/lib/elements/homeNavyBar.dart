@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, no_leading_underscores_for_local_identifiers, file_names
+
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:habits/pages/home.dart';
@@ -70,12 +72,12 @@ class _homeNavyBarState extends State<HomeNavyBar> {
         ];
     }
 
-    PersistentTabController _controller;
-    _controller = PersistentTabController(initialIndex: 0);
+    PersistentTabController controller;
+    controller = PersistentTabController(initialIndex: 0);
 
     return PersistentTabView(
         context,
-        controller: _controller,
+        controller: controller,
         screens: _buildScreens(),
         items: _navBarsItems(),
         confineInSafeArea: true,

@@ -6,7 +6,6 @@ import 'package:habits/firebase_options.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:habits/elements/homeNavyBar.dart';
-import 'boxes.dart';
 
 Future<void> main() async {
   
@@ -25,7 +24,7 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   
-  const MyApp({Key? key}):super(key:key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();

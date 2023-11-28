@@ -1,4 +1,5 @@
-import 'dart:convert';
+// ignore_for_file: file_names
+
 import 'package:hive/hive.dart';
 
 part 'Habit.g.dart';
