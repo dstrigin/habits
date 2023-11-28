@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:habits/boxes.dart';
+import 'package:habits/Habit.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:habits/elements/appBars.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -11,83 +14,89 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-    void initFirebase() async {
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp();
-    }
-
   @override
   Widget build(BuildContext context) {
-      initFirebase();
     return Scaffold(
-        appBar: appBar(),
-        body: ListView(
-          padding: const EdgeInsets.only(top: 5, bottom: 5, left: 7, right: 7),
-          scrollDirection: Axis.vertical,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 10),
-              child: SvgPicture.asset(
-                  'assets/icons/hp_bar.svg',
-                  alignment: Alignment.center,
-                  width: 50,
-                  height: 30
-              ),
+      appBar: homeAppBar(),
+      body: Column(
+        
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 7, bottom: 7, left: 5, right: 5
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/cigarette.svg',
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.centerLeft,
-                ),
-                const Text(
-                  'Курение',
-                  locale: Locale('ru'),
-                  style: TextStyle(
-                    fontSize: 30
-                  ),
-                ),
-                IconButton(
-                    onPressed: (){
-                      showDialog(context: context, builder: (BuildContext context){
-                        return const AlertDialog(
-                          content: Text('Употребление никотина(табак, электронные сигареты) сильно влияют на дыхательную систему и разрушают легкие.'),
-                        );
-
-                      });
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/info.svg',
-                      alignment: Alignment.centerRight,
-                      width: 50,
-                      height: 50
+            child: SvgPicture.asset(
+              'assets/icons/hp_bar.svg',
+              alignment: Alignment.center,
+              width: 50,
+              height: 30,
+            ),
+          ),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<Habit>('boxHabits').listenable(),
+              builder: (context, Box<Habit> box, _){
+                if (box.values.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'Вы не добавили ни одной привычки.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
                     ),
-
-                )
-              ],
+                  );
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.only(
+                    top: 7, bottom: 7, left: 5, right: 5
+                  ),
+                  itemCount: box.values.length,
+                  itemBuilder: (context, index){
+                    Habit? hab = box.getAt(index);
+                    return ListTile(
+                      title: Text(
+                        hab!.id.toString(),
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                      leading: SvgPicture.asset(
+                        'assets/icons/${hab.icon}.svg',
+                        width: 50,
+                        height: 50,
+                        alignment: Alignment.centerLeft,
+                      ),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                              title: Text(
+                                hab.id.toString(), 
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold
+                                )
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      boxHabits.delete(hab.key);
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Icon(Icons.delete),
+                                )
+                              ],
+                          );
+                        }
+                      );
+                    },
+                    );
+                  }
+                );
+              },
             ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
-}
-
-AppBar appBar() {
-  return AppBar(
-        title: const Text(
-          'habits.', 
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 32,
-            fontWeight: FontWeight.bold 
-          ),
-        ),
-      backgroundColor: Colors.cyan,
-      elevation: 0.0,
-      centerTitle: true,
-      toolbarHeight: 65,
-  );
 }
