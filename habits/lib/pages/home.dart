@@ -19,7 +19,16 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: homeAppBar(),
-      body:ValueListenableBuilder(
+      body: Column(
+    children: [
+      SvgPicture.asset(
+          'assets/icons/hp_bar.svg',
+          alignment: Alignment.center,
+          width: 50,
+          height: 30
+      ),
+      Expanded(
+      child: ValueListenableBuilder(
         valueListenable: Hive.box<Habit>('boxHabits').listenable(),
         builder: (context, Box<Habit> box, _){
           if (box.values.isEmpty) {
@@ -77,8 +86,10 @@ class _HomePageState extends State<HomePage> {
               }
           );
         },
-      )
-
+      ),
+    ),
+    ],
+      ),
     );
   }
 }
