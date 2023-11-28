@@ -26,10 +26,17 @@ class _HomePageState extends State<HomePage> {
         builder: (context, Box<Habit> box, _){
           if (box.values.isEmpty) {
             return const Center(
-              child: Text('Вы не добавили ни одной привычки.'),
+              child: Text(
+                'Вы не добавили ни одной привычки.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30),
+              ),
             );
           }
           return ListView.builder(
+              padding: const EdgeInsets.only(
+                top: 7, bottom: 7, left: 5, right: 5
+              ),
               itemCount: box.values.length,
               itemBuilder: (context, index){
                 Habit? hab = box.getAt(index);
