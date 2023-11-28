@@ -66,7 +66,7 @@ class _AddHabitState extends State<AddHabit> {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
                     padding: const EdgeInsets.only(
-                        top: 5, bottom: 5, left: 7, right: 7),
+                        top: 7, bottom: 7, left: 5, right: 5),
                     scrollDirection: Axis.vertical,
                     itemCount: snapshot.data!.length, // Используйте snapshot.data!
                     itemBuilder: (context, index) {
@@ -74,14 +74,14 @@ class _AddHabitState extends State<AddHabit> {
                       return ListTile(
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
-                          width: 45,
-                          height: 45,
+                          width: 50,
+                          height: 50,
                           alignment: Alignment.centerLeft,
                         ),
                         title: Text(
                           habit.id.toString(),
                           style: const TextStyle(
-                            fontSize: 22
+                            fontSize: 24
                             )
                           ),
                         onTap: () {
@@ -89,7 +89,11 @@ class _AddHabitState extends State<AddHabit> {
                               context: context,
                               builder: (BuildContext context){
                                 return AlertDialog(
-                                  title:  Text(habit.id.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+                                  shape: const LinearBorder(),
+                                  title:  Text(
+                                    habit.id.toString(), 
+                                    style: const TextStyle(fontWeight: FontWeight.bold)
+                                  ),
                                   content: Text(habit.description),
                                   actions: [
                                     ElevatedButton(
@@ -107,7 +111,7 @@ class _AddHabitState extends State<AddHabit> {
                                           Navigator.of(context).pop();
                                         });
                                       },
-                                      child:const  Text('Добавить'),
+                                      child:const Text('Добавить'),
                                     ),
                                   ],
 

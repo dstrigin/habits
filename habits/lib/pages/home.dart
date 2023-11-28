@@ -34,11 +34,14 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index){
                 Habit? hab = box.getAt(index);
                 return ListTile(
-                  title: Text(hab!.id.toString()),
+                  title: Text(
+                    hab!.id.toString(),
+                    style: const TextStyle(fontSize: 24),
+                  ),
                   leading: SvgPicture.asset(
                     'assets/icons/${hab.icon}.svg',
-                    width: 45,
-                    height: 45,
+                    width: 50,
+                    height: 50,
                     alignment: Alignment.centerLeft,
                   ),
                   onTap: () {
@@ -46,8 +49,9 @@ class _HomePageState extends State<HomePage> {
                         context: context,
                         builder: (BuildContext context){
                           return AlertDialog(
-                              title: Text(hab.id.toString(), style:TextStyle(fontWeight: FontWeight.bold)),
-                            
+                              title: Text(hab.id.toString(), style: const TextStyle(
+                                fontWeight: FontWeight.bold)
+                              ),
                             actions: [
                               ElevatedButton(
                                   onPressed: () async {
