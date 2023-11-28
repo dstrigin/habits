@@ -5,7 +5,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:habits/pages/home.dart';
 import 'package:habits/pages/documentation.dart';
 import 'package:habits/pages/history.dart';
-import 'package:habits/pages/screen.dart';
+import 'package:habits/pages/fact.dart';
 import 'package:habits/pages/add_habit.dart';
 
 /* Класс навигационной панели на главном экране.
@@ -27,7 +27,7 @@ class _homeNavyBarState extends State<HomeNavyBar> {
           const HomePage(),
           const HistoryPage(),
           const AddHabit(),
-          const Screen4(),
+          const FactPage(),
           const DocumentationPage(),
         ];
     }
@@ -58,7 +58,7 @@ class _homeNavyBarState extends State<HomeNavyBar> {
 
             PersistentBottomNavBarItem(
                 icon: const Icon(Icons.question_mark),
-                title: ("Thinking"),
+                title: ("Fact"),
                 activeColorPrimary: Colors.blue,
                 inactiveColorPrimary: Colors.grey,
             ),
