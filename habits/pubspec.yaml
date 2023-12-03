@@ -46,6 +46,8 @@ dependencies:
   firebase_storage: ^11.5.2
   firebase_database: ^10.3.5
 
+  url_launcher: ^6.2.1
+
 dev_dependencies:
   hive_generator:
   build_runner:
