@@ -8,12 +8,8 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: histAppBar(),
-      body: const Center(
-        child: Text(
-          'Здесь будет отображаться история добавления вами привычек',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30),
-        )
+      body: ListView(
+
       )
     );
   }
