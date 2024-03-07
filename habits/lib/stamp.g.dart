@@ -18,7 +18,7 @@ class StampAdapter extends TypeAdapter<Stamp> {
     };
     return Stamp(
       habit: fields[0] as Habit,
-      time: fields[1] as Timestamp,
+      time: fields[1] as DateTime,
       added: fields[2] as bool,
     );
   }

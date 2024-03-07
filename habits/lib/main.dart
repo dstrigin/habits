@@ -17,6 +17,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   
   Hive.registerAdapter(HabitAdapter());
+  Hive.registerAdapter(StampAdapter());
   
   boxHabits = await Hive.openBox<Habit>('boxHabits');
   boxTimestamps = await Hive.openBox<Stamp>('boxTimestamps');

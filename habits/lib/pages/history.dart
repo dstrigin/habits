@@ -40,7 +40,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       Stamp? stamp = box.getAt(index);
                       return ListTile(
                           title: Text(
-                            stamp!.time.toString(),
+                            "${stamp!.time.day}/${stamp!.time.month}/${stamp!.time.year} ${stamp!.time.hour}:${stamp!.time.minute}",
                             style: const TextStyle(fontSize: 24),
                           ),
                           leading: SvgPicture.asset(

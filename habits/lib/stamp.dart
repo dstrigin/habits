@@ -9,7 +9,7 @@ class Stamp extends HiveObject{
   @HiveField(0)
   late Habit habit; // привычка
   @HiveField(1)
-  late Timestamp time; // время добавления
+  late DateTime time; // время добавления
   @HiveField(2)
   late bool added; // добавлена - true / удалена - false
 
