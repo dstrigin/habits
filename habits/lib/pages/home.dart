@@ -6,7 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:habits/elements/appBars.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: homeAppBar(),
       body: Column(
-        
         children: [
           Padding(
             padding: const EdgeInsets.only(

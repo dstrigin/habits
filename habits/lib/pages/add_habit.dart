@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
+import '../stamp.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key});
@@ -38,7 +39,6 @@ Future<List<Habit>> getHabits() async {
 }
 
 class _AddHabitState extends State<AddHabit> {
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +102,8 @@ class _AddHabitState extends State<AddHabit> {
                                   actions: [
                                     ElevatedButton(
                                       onPressed: () async{
-
-                                        
-
                                         setState(() {
-                                          boxHabits.put('key_${habit.id.toString()}',
+                                          boxHabits.put('key_${habit.id}',
                                               Habit(
                                                   id:habit.id,
                                                   description:habit.description,
@@ -115,13 +112,17 @@ class _AddHabitState extends State<AddHabit> {
                                                   icon:habit.icon,
                                               )
                                           );
+                                          boxTimestamps.put('key_${habit.id}_added',
+                                              Stamp(
+                                                  habit, Timestamp.now(), true
+                                              )
+                                          );
                                           Navigator.of(context).pop();
                                         });
                                       },
                                       child:const Text('Добавить'),
                                     ),
                                   ],
-
                                   actionsAlignment: MainAxisAlignment.spaceAround,
                                 );
                               }

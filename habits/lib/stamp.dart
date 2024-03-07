@@ -11,10 +11,10 @@ class Stamp extends HiveObject{
   @HiveField(2)
   late bool added; // добавлена - true / удалена - false
 
-  Stamp(Habit _h, Timestamp _t, bool _a){
-    habit = _h;
-    time = _t;
-    added = _a;
+  Stamp(Habit h, Timestamp t, bool a){
+    habit = h;
+    time = t;
+    added = a;
   }
 
 }
