@@ -114,7 +114,9 @@ class _AddHabitState extends State<AddHabit> {
                                           );
                                           boxTimestamps.put('key_${habit.id}_added',
                                               Stamp(
-                                                  habit, Timestamp.now(), true
+                                                  habit: habit,
+                                                  time: Timestamp.now(),
+                                                  added: true
                                               )
                                           );
                                           Navigator.of(context).pop();
