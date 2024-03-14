@@ -1,20 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:habits/elements/appBars.dart';
+import 'package:habits/stamp.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class HistoryPage extends StatelessWidget {
+class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
 
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: histAppBar(),
-      body: const Center(
-        child: Text(
-          'Здесь будет отображаться история добавления вами привычек',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30),
-        )
-      )
+      body: Column(
+        children: [
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<Stamp>('boxTimestamps').listenable(),
+              builder: (context, Box<Stamp> box, _) {
+                if (box.values.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'Вы не добавили ни одной привычки.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
+                }
+                return ListView.builder(
+                    padding: const EdgeInsets.only(
+                        top: 7, bottom: 7, left: 5, right: 5),
+                    itemCount: box.values.length,
+                    itemBuilder: (context, index) {
+
+                      // преобразовываем содержимое в список и сортируем по времени
+                      List values = box.values.toList();
+                      values.sort((x, y) => y.time.compareTo(x.time));
+                      Stamp? stamp = values[index];
+
+                      // в случае, если время представляет одноразрядное число
+                      String day = '${stamp?.time.day}'.length == 1
+                                  ? '0${stamp?.time.day}'
+                                  : '${stamp?.time.day}';
+
+                      String month = '${stamp?.time.month}'.length == 1
+                          ? '0${stamp?.time.month}'
+                          : '${stamp?.time.month}';
+
+                      String hour = '${stamp?.time.hour}'.length == 1
+                          ? '0${stamp?.time.hour}'
+                          : '${stamp?.time.hour}';
+
+                      String min = '${stamp?.time.minute}'.length == 1
+                          ? '0${stamp?.time.minute}'
+                          : '${stamp?.time.minute}';
+
+                      return ListTile(
+                          title: Text(
+                            "$day/$month $hour:$min",
+                            style: const TextStyle(fontSize: 24),
+                          ),
+                          leading: SvgPicture.asset(
+                            'assets/icons/${stamp?.habit.icon}.svg',
+                            width: 50,
+                            height: 50,
+                            alignment: Alignment.centerLeft,
+                          ),
+                          trailing: stamp!.added
+                              ? const Icon(Icons.add)
+                              : const Icon(Icons.remove));
+                    });
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

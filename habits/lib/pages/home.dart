@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
+import 'package:habits/stamp.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:habits/elements/appBars.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,7 +20,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: homeAppBar(),
       body: Column(
-        
         children: [
           Padding(
             padding: const EdgeInsets.only(
@@ -79,6 +79,13 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () async {
                                     setState(() {
                                       boxHabits.delete(hab.key);
+                                      boxTimestamps.put('key_${hab.id}_removed',
+                                          Stamp(
+                                              habit: hab,
+                                              time: DateTime.now(),
+                                              added: false
+                                          )
+                                      );
                                     });
                                     Navigator.of(context).pop();
                                   },
