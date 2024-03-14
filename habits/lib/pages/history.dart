@@ -37,10 +37,13 @@ class _HistoryPageState extends State<HistoryPage> {
                         top: 7, bottom: 7, left: 5, right: 5),
                     itemCount: box.values.length,
                     itemBuilder: (context, index) {
-                      Stamp? stamp = box.getAt(index);
+                      //Stamp? stamp = box.getAt(index);
+                      List values = box.values.toList();
+                      values.sort((x, y) => y.time.compareTo(x.time));
+                      Stamp? stamp = values[index];
                       return ListTile(
                           title: Text(
-                            "${stamp!.time.day}/${stamp!.time.month}/${stamp!.time.year} ${stamp!.time.hour}:${stamp!.time.minute}",
+                            "${stamp!.time.day}/${stamp.time.month}/${stamp.time.year} ${stamp.time.hour}:${stamp.time.minute}",
                             style: const TextStyle(fontSize: 24),
                           ),
                           leading: SvgPicture.asset(
