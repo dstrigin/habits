@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
-import '../stamp.dart';
+import 'package:habits/stamp.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key});
