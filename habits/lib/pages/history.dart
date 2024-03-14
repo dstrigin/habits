@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habits/elements/appBars.dart';
-import 'package:habits/boxes.dart';
 import 'package:habits/stamp.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,22 +36,41 @@ class _HistoryPageState extends State<HistoryPage> {
                         top: 7, bottom: 7, left: 5, right: 5),
                     itemCount: box.values.length,
                     itemBuilder: (context, index) {
-                      //Stamp? stamp = box.getAt(index);
+
+                      // преобразовываем содержимое в список и сортируем по времени
                       List values = box.values.toList();
                       values.sort((x, y) => y.time.compareTo(x.time));
                       Stamp? stamp = values[index];
+
+                      // в случае, если время представляет одноразрядное число
+                      String day = '${stamp?.time.day}'.length == 1
+                                  ? '0${stamp?.time.day}'
+                                  : '${stamp?.time.day}';
+
+                      String month = '${stamp?.time.month}'.length == 1
+                          ? '0${stamp?.time.month}'
+                          : '${stamp?.time.month}';
+
+                      String hour = '${stamp?.time.hour}'.length == 1
+                          ? '0${stamp?.time.hour}'
+                          : '${stamp?.time.hour}';
+
+                      String min = '${stamp?.time.minute}'.length == 1
+                          ? '0${stamp?.time.minute}'
+                          : '${stamp?.time.minute}';
+
                       return ListTile(
                           title: Text(
-                            "${stamp!.time.day}/${stamp.time.month}/${stamp.time.year} ${stamp.time.hour}:${stamp.time.minute}",
+                            "$day/$month $hour:$min",
                             style: const TextStyle(fontSize: 24),
                           ),
                           leading: SvgPicture.asset(
-                            'assets/icons/${stamp.habit.icon}.svg',
+                            'assets/icons/${stamp?.habit.icon}.svg',
                             width: 50,
                             height: 50,
                             alignment: Alignment.centerLeft,
                           ),
-                          trailing: stamp.added
+                          trailing: stamp!.added
                               ? const Icon(Icons.add)
                               : const Icon(Icons.remove));
                     });
