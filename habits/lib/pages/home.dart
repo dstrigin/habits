@@ -20,15 +20,13 @@ class _HomePageState extends State<HomePage> {
       appBar: homeAppBar(),
       body: Column(
         children: [
-          Padding(
+          const Padding(
             padding:
-                const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
-            child: SvgPicture.asset(
-              'assets/icons/hp_bar.svg',
-              alignment: Alignment.center,
-              width: 50,
-              height: 30,
-            ),
+                EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
+            child: LinearProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              backgroundColor: Colors.cyan,
+              minHeight: 33,
+              value: 0.95, )
           ),
           Expanded(
             child: ValueListenableBuilder(
