@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
+import 'package:habits/main.dart';
 import 'package:habits/stamp.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:habits/elements/appBars.dart';
@@ -14,20 +15,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double healthBarValue=0.95;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(),
       body: Column(
         children: [
-          const Padding(
+           Padding(
             padding:
                 EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
-            child: LinearProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              backgroundColor: Colors.cyan,
-              minHeight: 33,
-              value: 0.95, )
-          ),
+            child: StreamBuilder<double>(
+              stream: healthBarController.stream,
+              initialData: healthBarValue,
+              builder: (context,snapshot){
+                if (snapshot.hasData)
+                  {
+                    healthBarValue=(healthBarValue + snapshot.data!).clamp(0.0, 1.0);
+                  }
+                return LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  backgroundColor: Colors.cyan,
+                    minHeight: 33,
+                  value:healthBarValue,
+                );
+              },
+            ),
+    ),
+
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: Hive.box<Habit>('boxHabits').listenable(),
@@ -86,6 +101,8 @@ class _HomePageState extends State<HomePage> {
                                                   time: DateTime.now(),
                                                   added: false));
                                         });
+                                        double healthChange = hab!.type ? -hab.damage : hab.damage;
+                                        healthBarController.add(healthChange);
                                         Navigator.of(context).pop();
                                       },
                                       child: const Icon(Icons.delete),

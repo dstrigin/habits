@@ -8,6 +8,8 @@ import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
 import 'package:habits/stamp.dart';
 
+import '../main.dart';
+
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key});
 
@@ -110,6 +112,8 @@ class _AddHabitState extends State<AddHabit> {
                                     ElevatedButton(
                                       onPressed: () async{
                                         setState(() {
+                                          double newValue = habit.type ? habit.damage :-habit.damage;
+                                          healthBarController.add(newValue);
                                           boxHabits.put('key_${habit.id}',
                                               Habit(
                                                   id:habit.id,
