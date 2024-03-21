@@ -119,13 +119,14 @@ class _AddHabitState extends State<AddHabit> {
                                                   icon:habit.icon,
                                               )
                                           );
-                                          boxTimestamps.put('key_${habit.id}_added',
+                                          boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
                                               Stamp(
                                                   habit: habit,
                                                   time: DateTime.now(),
                                                   added: true
                                               )
                                           );
+                                          Stamp.id++;
                                           Navigator.of(context).pop();
                                         });
                                       },
