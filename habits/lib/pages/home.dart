@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () async {
                                     setState(() {
                                       boxHabits.delete(hab.key);
-                                      boxTimestamps.put('key_${hab.id}_removed',
+                                      boxTimestamps.put('key_${hab.id}_${Stamp.id}_removed',
                                           Stamp(
                                               habit: hab,
                                               time: DateTime.now(),
@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                                           )
                                       );
                                     });
+                                    Stamp.id++;
                                     Navigator.of(context).pop();
                                   },
                                   child: const Icon(Icons.delete),
