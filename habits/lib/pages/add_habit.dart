@@ -70,7 +70,7 @@ class _AddHabitState extends State<AddHabit> {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
                     padding: const EdgeInsets.only(
-                        top: 7, bottom: 7, left: 5, right: 5),
+                        top: 20, bottom: 7, left: 3, right: 5),
                     scrollDirection: Axis.vertical,
                     itemCount: snapshot.data!.length, // Используйте snapshot.data!
                     itemBuilder: (context, index) {
@@ -78,8 +78,8 @@ class _AddHabitState extends State<AddHabit> {
                       return ListTile(
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
-                          width: 50,
-                          height: 50,
+                          width: 60,
+                          height: 60,
                           alignment: Alignment.centerLeft,
                         ),
                         title: Text(
@@ -93,12 +93,19 @@ class _AddHabitState extends State<AddHabit> {
                               context: context,
                               builder: (BuildContext context){
                                 return AlertDialog(
-                                  shape: const LinearBorder(),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10))
+                                  ),
                                   title:  Text(
                                     habit.id.toString(), 
-                                    style: const TextStyle(fontWeight: FontWeight.bold)
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  content: Text(habit.description),
+                                  content: Text(
+                                      habit.description,
+                                      style: const TextStyle(fontSize: 18)),
                                   actions: [
                                     ElevatedButton(
                                       onPressed: () async{

@@ -66,8 +66,8 @@ class _HistoryPageState extends State<HistoryPage> {
                           ),
                           leading: SvgPicture.asset(
                             'assets/icons/${stamp?.habit.icon}.svg',
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             alignment: Alignment.centerLeft,
                           ),
                           trailing: stamp!.added
