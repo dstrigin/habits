@@ -8,14 +8,21 @@ class FactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: factAppBar(),
-      body: Container(
-        child: SvgPicture.asset(
-          'assets/icons/diet.svg',
-          width: 240),
-        margin: EdgeInsets.symmetric(horizontal: 86.0, vertical: 55.0)
-      ),
-
-    );
+        appBar: factAppBar(),
+        body: Column(
+          children: [
+            SvgPicture.asset('assets/icons/diet.svg', width: 240),
+            const Text(
+              'Здесь будет интересная информация о случайной привычке, которая будет меняться время от времени',
+              style: TextStyle(fontSize: 30),
+              textAlign: TextAlign.center,
+            ),
+            FilledButton(
+              onPressed: () {},
+              
+              child: Text('да'),
+            )
+          ],
+        ));
   }
 }
