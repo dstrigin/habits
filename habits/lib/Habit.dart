@@ -17,7 +17,7 @@ class Habit extends HiveObject{
   @HiveField(4)
   late String icon;
 
-  late String? fact;
+  late String fact;
 
   Habit({
     this.id = '',
