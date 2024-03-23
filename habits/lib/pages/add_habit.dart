@@ -110,24 +110,27 @@ class _AddHabitState extends State<AddHabit> {
                                     ElevatedButton(
                                       onPressed: () async{
                                         setState(() {
-                                          boxHabits.put('key_${habit.id}',
+                                          if (!boxHabits.containsKey('key_${habit.id}'))
+                                          {
+                                            boxHabits.put('key_${habit.id}',
                                               Habit(
                                                   id:habit.id,
                                                   description:habit.description,
                                                   damage:habit.damage,
                                                   type:habit.type,
-                                                  icon:habit.icon,
+                                                  icon:habit.icon
                                               )
-                                          );
-                                          boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
+                                            );
+                                            boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
                                               Stamp(
                                                   habit: habit,
                                                   time: DateTime.now(),
                                                   added: true
                                               )
-                                          );
-                                          Stamp.id++;
-                                          Navigator.of(context).pop();
+                                            );
+                                            Stamp.id++;
+                                            Navigator.of(context).pop();
+                                          }
                                         });
                                       },
                                       child:const Text('Добавить'),
