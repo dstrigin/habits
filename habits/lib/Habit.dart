@@ -17,12 +17,15 @@ class Habit extends HiveObject{
   @HiveField(4)
   late String icon;
 
+  late String? fact;
+
   Habit({
     this.id = '',
     required this.description,
     required this.type,
     required this.damage,
-    required this.icon
+    required this.icon,
+    this.fact = ''
   });
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +34,7 @@ class Habit extends HiveObject{
     'type': type,
     'damage': damage,
     'icon': icon,
+    'fact' : fact
   };
 
   static Habit fromJson(Map<String, dynamic> json) => Habit(
@@ -38,7 +42,8 @@ class Habit extends HiveObject{
       description: json['description'],
       type: json['type'],
       damage: json['damage'],
-      icon: json['icon']
+      icon: json['icon'],
+      fact: json['fact']
   );
 }
 

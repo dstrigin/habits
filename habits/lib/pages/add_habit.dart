@@ -116,7 +116,7 @@ class _AddHabitState extends State<AddHabit> {
                                                   description:habit.description,
                                                   damage:habit.damage,
                                                   type:habit.type,
-                                                  icon:habit.icon,
+                                                  icon:habit.icon
                                               )
                                           );
                                           boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
