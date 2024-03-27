@@ -52,9 +52,18 @@ class _HomePageState extends State<HomePage> {
             child: ValueListenableBuilder<double>(
               valueListenable: healthBarValueNotifier,
               builder: (context, value, child) {
+                Color color;
+                if (value >= 0.75) {
+                  color = Colors.green;
+                } else if (value >= 0.5) {
+                  color = Colors.yellow;
+                } else if (value >= 0.25) {
+                  color = Colors.orange;
+                } else {
+                  color = Colors.red;
+                }
                 return LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  backgroundColor: Colors.cyan,
+                  valueColor: AlwaysStoppedAnimation<Color>(color),
                   minHeight: 33,
                   value: value,
                 );
