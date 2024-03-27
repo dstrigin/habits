@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
@@ -15,7 +17,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double healthBarValue=0.95;
+  late ValueNotifier<double> healthBarValueNotifier;
+  @override
+  void initState() {
+    super.initState();
+    final box = Hive.box('hpBarValue');
+    double initialHealthBarValue = box.get('healthBarValue', defaultValue: 0.95);
+    healthBarValueNotifier = ValueNotifier<double>(initialHealthBarValue);
+    _initializeStream();
+  }
+  void _initializeStream() {
+    healthBarController.stream.listen((double change) {
+      double newValue = healthBarValueNotifier.value + change;
+      newValue = newValue.clamp(0.0, 1.0); // Ограничиваем значение от 0 до 1
+      healthBarValueNotifier.value = newValue;
+      final box = Hive.box('hpBarValue');
+      box.put('healthBarValue', newValue);
+    });
+  }
+  @override
+  void dispose() {
+    healthBarValueNotifier.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,20 +49,16 @@ class _HomePageState extends State<HomePage> {
            Padding(
             padding:
                 EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
-            child: StreamBuilder<double>(
-              stream: healthBarController.stream,
-              initialData: healthBarValue,
-              builder: (context,snapshot){
-                if (snapshot.hasData)
-                  {
-                    healthBarValue=(healthBarValue + snapshot.data!).clamp(0.0, 1.0);
-                  }
+            child: ValueListenableBuilder<double>(
+              valueListenable: healthBarValueNotifier,
+              builder: (context, value, child) {
                 return LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                   backgroundColor: Colors.cyan,
-                    minHeight: 33,
-                  value:healthBarValue,
+                  minHeight: 33,
+                  value: value,
                 );
+
               },
             ),
     ),
@@ -101,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                                                   time: DateTime.now(),
                                                   added: false));
                                         });
-                                        double healthChange = hab!.type ? -hab.damage : hab.damage;
+                                        double healthChange = hab.type ? -hab.damage/4 : hab.damage;
                                         healthBarController.add(healthChange);
                                         Navigator.of(context).pop();
                                       },

@@ -20,10 +20,11 @@ Future<void> main() async {
   
   Hive.registerAdapter(HabitAdapter());
   Hive.registerAdapter(StampAdapter());
+
   
   boxHabits = await Hive.openBox<Habit>('boxHabits');
   boxTimestamps = await Hive.openBox<Stamp>('boxTimestamps');
-
+  hpBarValue = await Hive.openBox("hpBarValue");
   runApp(const MyApp());
 }
 
