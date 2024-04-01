@@ -12,6 +12,8 @@ class Stamp extends HiveObject{
   @HiveField(2)
   late bool added; // добавлена - true / удалена - false
 
+  static int id = 0;
+
   Stamp({
     required this.habit,
     required this.time,
