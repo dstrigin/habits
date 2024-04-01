@@ -147,6 +147,12 @@ class _HomePageState extends State<HomePage> {
                                 ElevatedButton(
                                   onPressed: () {
                                     box.delete(hab.key);
+                                    boxTimestamps.put(
+                                      'key_${hab.id}_removed',
+                                      Stamp(
+                                      habit: hab,
+                                      time: DateTime.now(),
+                                      added: false));
                                     Navigator.of(context).pop();
                                   },
                                   child: const Icon(Icons.delete),
