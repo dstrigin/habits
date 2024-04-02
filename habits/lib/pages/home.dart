@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
-import 'package:habits/main.dart';
 import 'package:habits/stamp.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:habits/elements/appBars.dart';
@@ -26,8 +25,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _initializeDailyUpdate() {
-    _updateHealthForMissedDays();
-    dailyUpdateTimer = Timer.periodic(const Duration(days: 1), (Timer t) => _updateHealthDaily());
+    _updateHealthForMissedMinutes();
+    dailyUpdateTimer = Timer.periodic( const Duration(minutes: 2), (Timer t) => _updateHealthDaily());
   }
 
   void _updateHealthDaily() {
@@ -38,20 +37,17 @@ class _HomePageState extends State<HomePage> {
     final box = Hive.box<Habit>('boxHabits');
     final healthBox = Hive.box('hpBarValue');
 
-
     double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
-
 
     double totalChange = box.values.fold(0.0, (sum, habit) => sum + (habit.type ? habit.damage : -habit.damage));
 
-
     double newValue = (currentHealth + totalChange).clamp(0.0, 1.0);
-
 
     setState(() {
       healthBox.put('healthBarValue', newValue);
     });
   }
+
   void _updateHealthForMissedDays() {
     final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
     final today = DateTime.now();
@@ -63,6 +59,25 @@ class _HomePageState extends State<HomePage> {
 
       if (missedDays > 0) {
         for (int i = 0; i < missedDays; i++) {
+          _updateHealthDaily();
+        }
+      }
+    }
+  }
+
+  void _updateHealthForMissedMinutes() {
+    final boxLastVisit = Hive.box('lastVisit');
+    final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
+    final now = DateTime.now();
+
+    boxLastVisit.put('lastVisitDate', now.millisecondsSinceEpoch);
+
+    if (lastVisitTimestamp != null) {
+      final lastVisitDate = DateTime.fromMillisecondsSinceEpoch(lastVisitTimestamp);
+      final missedMinutes = now.difference(lastVisitDate).inMinutes;
+
+      if (missedMinutes > 0) {
+        for (int i = 0; i < missedMinutes; i++) {
           _updateHealthDaily();
         }
       }
@@ -82,7 +97,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
+            padding: const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
             child: FutureBuilder(
               future: Future.value(Hive.box('hpBarValue').get('healthBarValue', defaultValue: 0.95)),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -100,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 return LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                   minHeight: 33,
-                  value: value,
+                  value: value > 0.05 ? value : 0.05,
                 );
               },
             ),
