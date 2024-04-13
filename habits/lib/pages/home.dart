@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
@@ -16,78 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Timer? dailyUpdateTimer;
 
   @override
   void initState() {
     super.initState();
-    _initializeDailyUpdate();
-  }
-
-  void _initializeDailyUpdate() {
-    _updateHealthForMissedMinutes();
-    dailyUpdateTimer = Timer.periodic( const Duration(minutes: 2), (Timer t) => _updateHealthDaily());
-  }
-
-  void _updateHealthDaily() {
-    _updateHealthBar();
-  }
-
-  void _updateHealthBar() {
-    final box = Hive.box<Habit>('boxHabits');
-    final healthBox = Hive.box('hpBarValue');
-
-    double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
-
-    double totalChange = box.values.fold(0.0, (sum, habit) => sum + (habit.type ? habit.damage : -habit.damage));
-
-    double newValue = (currentHealth + totalChange).clamp(0.0, 1.0);
-
-    setState(() {
-      healthBox.put('healthBarValue', newValue);
-    });
-  }
-
-  void _updateHealthForMissedDays() {
-    final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
-    final today = DateTime.now();
-    boxLastVisit.put('lastVisitDate', today.millisecondsSinceEpoch);
-
-    if (lastVisitTimestamp != null) {
-      final lastVisitDate = DateTime.fromMillisecondsSinceEpoch(lastVisitTimestamp);
-      final missedDays = today.difference(lastVisitDate).inDays;
-
-      if (missedDays > 0) {
-        for (int i = 0; i < missedDays; i++) {
-          _updateHealthDaily();
-        }
-      }
-    }
-  }
-
-  void _updateHealthForMissedMinutes() {
-    final boxLastVisit = Hive.box('lastVisit');
-    final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
-    final now = DateTime.now();
-
-    boxLastVisit.put('lastVisitDate', now.millisecondsSinceEpoch);
-
-    if (lastVisitTimestamp != null) {
-      final lastVisitDate = DateTime.fromMillisecondsSinceEpoch(lastVisitTimestamp);
-      final missedMinutes = now.difference(lastVisitDate).inMinutes;
-
-      if (missedMinutes > 0) {
-        for (int i = 0; i < missedMinutes; i++) {
-          _updateHealthDaily();
-        }
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    dailyUpdateTimer?.cancel();
-    super.dispose();
   }
 
   @override
@@ -154,11 +85,25 @@ class _HomePageState extends State<HomePage> {
                               actionsPadding: const EdgeInsets.only(bottom: 20),
                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                               title: const Text(
-                                'Удалить привычку?',
+                                'Выберите действие',
                                 style: TextStyle(fontSize: 28),
                                 textAlign: TextAlign.center,
                               ),
                               actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        final healthBox = Hive.box('hpBarValue');
+
+                                        double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
+                                        double change = hab.type ? hab.damage : -hab.damage;
+
+                                        healthBox.put('healthBarValue', currentHealth + change);
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(Icons.check)
+                                ),
                                 ElevatedButton(
                                   onPressed: () {
                                     box.delete(hab.key);
