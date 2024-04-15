@@ -111,15 +111,18 @@ class _AddHabitState extends State<AddHabit> {
                                       style: const TextStyle(fontSize: 18)),
                                   actions: [
                                     ElevatedButton(
-                                        onPressed: () {
-                                          final healthBox = Hive.box('hpBarValue');
+                                        onPressed: () async {
+                                              double change = habit.type ? habit.damage : -habit.damage;
+                                              final healthBox = Hive.box('hpBarValue');
+                                              double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
+                                              healthBox.put('healthBarValue', currentHealth + change);
+                                             
+                                              print('----------------------------Поменяли хп');
+                                              setState(() {});
 
-                                          double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
-                                          double change = habit.type ? habit.damage : -habit.damage;
-
-                                          healthBox.put('healthBarValue', currentHealth + change);
-                                          Navigator.of(context).pop();
-                                        },
+                                              Navigator.of(context).pop();
+                                            
+                                          },
                                         child: const Text('Отметить')
                                     ),
                                     ElevatedButton(

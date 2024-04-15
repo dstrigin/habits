@@ -19,6 +19,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _getHealthBarValue().then((value) {
+      setState(() {
+        final healthBox = Hive.box('hpBarValue');
+        healthBox.put('healthBarValue', value);
+      });
+    });
+  }
+
+  Future<double> _getHealthBarValue() async {
+    print('\n\nПОДТЯГИВАЕМ ХП\n\n');
+    return await Hive.box('hpBarValue').get('healthBarValue', defaultValue: 0.95);
+  }
+
+  Future<void> _updateHealthBarValue(double change) async {
+    setState(() {
+      final healthBox = Hive.box('hpBarValue');
+      double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
+      healthBox.put('healthBarValue', currentHealth + change);
+    });
   }
 
   @override
@@ -30,7 +49,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
             child: FutureBuilder(
-              future: Future.value(Hive.box('hpBarValue').get('healthBarValue', defaultValue: 0.95)),
+              future: _getHealthBarValue(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 double value = snapshot.data ?? 0.95;
                 Color color;
@@ -93,12 +112,8 @@ class _HomePageState extends State<HomePage> {
                                 ElevatedButton(
                                     onPressed: () {
                                       setState(() {
-                                        final healthBox = Hive.box('hpBarValue');
-
-                                        double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
                                         double change = hab.type ? hab.damage : -hab.damage;
-
-                                        healthBox.put('healthBarValue', currentHealth + change);
+                                        _updateHealthBarValue(change);  
                                       });
                                       Navigator.of(context).pop();
                                     },
