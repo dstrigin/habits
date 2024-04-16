@@ -54,7 +54,7 @@ class _FactPageState extends State<FactPage> {
                               Column(
                                 children: [
                                   Text(
-                                    '${habit.id}',
+                                    habit.id,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 32

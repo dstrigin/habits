@@ -7,7 +7,7 @@ import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
 import 'package:habits/stamp.dart';
-
+import 'package:hive/hive.dart';
 import '../main.dart';
 
 class AddHabit extends StatefulWidget {
@@ -49,7 +49,7 @@ class _AddHabitState extends State<AddHabit> {
       body: Column(
         children: [
           Expanded(
-            child: FutureBuilder<List<Habit>>(
+            child: FutureBuilder<List<Habit>> (
               future: getHabits(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -74,9 +74,9 @@ class _AddHabitState extends State<AddHabit> {
                     padding: const EdgeInsets.only(
                         top: 20, bottom: 7, left: 3, right: 5),
                     scrollDirection: Axis.vertical,
-                    itemCount: snapshot.data!.length, // Используйте snapshot.data!
+                    itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      Habit habit = snapshot.data![index]; // Используйте snapshot.data!
+                      Habit habit = snapshot.data![index];
                       return ListTile(
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
@@ -109,6 +109,20 @@ class _AddHabitState extends State<AddHabit> {
                                       habit.description,
                                       style: const TextStyle(fontSize: 18)),
                                   actions: [
+                                    ElevatedButton(
+                                        onPressed: () async {
+                                              double change = habit.type ? habit.damage : -habit.damage;
+                                              final healthBox = Hive.box<double>('hpBarValue');
+                                              double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
+                                              healthBox.put('healthBarValue', currentHealth + change);
+                                             
+                                              setState(() {});
+
+                                              Navigator.of(context).pop();
+                                            
+                                          },
+                                        child: const Text('Отметить')
+                                    ),
                                     ElevatedButton(
                                       onPressed: () async{
                                         setState(() {

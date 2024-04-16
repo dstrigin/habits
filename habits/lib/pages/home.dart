@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habits/boxes.dart';
@@ -16,78 +15,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Timer? dailyUpdateTimer;
 
   @override
   void initState() {
     super.initState();
-    _initializeDailyUpdate();
   }
 
-  void _initializeDailyUpdate() {
-    _updateHealthForMissedMinutes();
-    dailyUpdateTimer = Timer.periodic( const Duration(minutes: 2), (Timer t) => _updateHealthDaily());
+  double? _getHealthBarValue() {
+    return Hive.box<double>('hpBarValue').get('healthBarValue', defaultValue: 0.95);
   }
 
-  void _updateHealthDaily() {
-    _updateHealthBar();
-  }
-
-  void _updateHealthBar() {
-    final box = Hive.box<Habit>('boxHabits');
-    final healthBox = Hive.box('hpBarValue');
-
-    double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
-
-    double totalChange = box.values.fold(0.0, (sum, habit) => sum + (habit.type ? habit.damage : -habit.damage));
-
-    double newValue = (currentHealth + totalChange).clamp(0.0, 1.0);
-
+  Future<void> _updateHealthBarValue(double change) async {
     setState(() {
-      healthBox.put('healthBarValue', newValue);
+      final healthBox = Hive.box<double>('hpBarValue');
+      double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
+      healthBox.put('healthBarValue', currentHealth + change);
     });
-  }
-
-  void _updateHealthForMissedDays() {
-    final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
-    final today = DateTime.now();
-    boxLastVisit.put('lastVisitDate', today.millisecondsSinceEpoch);
-
-    if (lastVisitTimestamp != null) {
-      final lastVisitDate = DateTime.fromMillisecondsSinceEpoch(lastVisitTimestamp);
-      final missedDays = today.difference(lastVisitDate).inDays;
-
-      if (missedDays > 0) {
-        for (int i = 0; i < missedDays; i++) {
-          _updateHealthDaily();
-        }
-      }
-    }
-  }
-
-  void _updateHealthForMissedMinutes() {
-    final boxLastVisit = Hive.box('lastVisit');
-    final lastVisitTimestamp = boxLastVisit.get('lastVisitDate');
-    final now = DateTime.now();
-
-    boxLastVisit.put('lastVisitDate', now.millisecondsSinceEpoch);
-
-    if (lastVisitTimestamp != null) {
-      final lastVisitDate = DateTime.fromMillisecondsSinceEpoch(lastVisitTimestamp);
-      final missedMinutes = now.difference(lastVisitDate).inMinutes;
-
-      if (missedMinutes > 0) {
-        for (int i = 0; i < missedMinutes; i++) {
-          _updateHealthDaily();
-        }
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    dailyUpdateTimer?.cancel();
-    super.dispose();
   }
 
   @override
@@ -98,10 +41,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
-            child: FutureBuilder(
-              future: Future.value(Hive.box('hpBarValue').get('healthBarValue', defaultValue: 0.95)),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                double value = snapshot.data ?? 0.95;
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<double>('hpBarValue').listenable(),
+              builder: (BuildContext context, hpBarValue, Widget? bar) {
+                double value = _getHealthBarValue() ?? 0.95;
                 Color color;
                 if (value >= 0.75) {
                   color = Colors.green;
@@ -154,11 +97,21 @@ class _HomePageState extends State<HomePage> {
                               actionsPadding: const EdgeInsets.only(bottom: 20),
                               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                               title: const Text(
-                                'Удалить привычку?',
+                                'Выберите действие',
                                 style: TextStyle(fontSize: 28),
                                 textAlign: TextAlign.center,
                               ),
                               actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        double change = hab.type ? hab.damage : -hab.damage;
+                                        _updateHealthBarValue(change);  
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Icon(Icons.check)
+                                ),
                                 ElevatedButton(
                                   onPressed: () {
                                     box.delete(hab.key);
