@@ -23,8 +23,7 @@ Future<void> main() async {
 
   boxHabits = await Hive.openBox<Habit>('boxHabits');
   boxTimestamps = await Hive.openBox<Stamp>('boxTimestamps');
-  hpBarValue = await Hive.openBox("hpBarValue");
-  boxLastVisit = await Hive.openBox('lastVisit');
+  hpBarValue = await Hive.openBox<double>('hpBarValue');
   runApp(const MyApp());
 }
 

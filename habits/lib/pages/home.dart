@@ -19,23 +19,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getHealthBarValue().then((value) {
-      setState(() {
-        final healthBox = Hive.box('hpBarValue');
-        healthBox.put('healthBarValue', value);
-      });
-    });
   }
 
-  Future<double> _getHealthBarValue() async {
-    print('\n\nПОДТЯГИВАЕМ ХП\n\n');
-    return await Hive.box('hpBarValue').get('healthBarValue', defaultValue: 0.95);
+  double? _getHealthBarValue() {
+    return Hive.box<double>('hpBarValue').get('healthBarValue', defaultValue: 0.95);
   }
 
   Future<void> _updateHealthBarValue(double change) async {
     setState(() {
-      final healthBox = Hive.box('hpBarValue');
-      double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
+      final healthBox = Hive.box<double>('hpBarValue');
+      double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
       healthBox.put('healthBarValue', currentHealth + change);
     });
   }
@@ -48,10 +41,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
-            child: FutureBuilder(
-              future: _getHealthBarValue(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                double value = snapshot.data ?? 0.95;
+            child: ValueListenableBuilder(
+              valueListenable: Hive.box<double>('hpBarValue').listenable(),
+              builder: (BuildContext context, hpBarValue, Widget? bar) {
+                double value = _getHealthBarValue() ?? 0.95;
                 Color color;
                 if (value >= 0.75) {
                   color = Colors.green;

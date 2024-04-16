@@ -9,7 +9,6 @@ import 'package:habits/elements/appBars.dart';
 import 'package:habits/stamp.dart';
 import 'package:hive/hive.dart';
 import '../main.dart';
-import 'package:habits/pages/home.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key});
@@ -113,11 +112,10 @@ class _AddHabitState extends State<AddHabit> {
                                     ElevatedButton(
                                         onPressed: () async {
                                               double change = habit.type ? habit.damage : -habit.damage;
-                                              final healthBox = Hive.box('hpBarValue');
-                                              double currentHealth = healthBox.get('healthBarValue', defaultValue: 0.95);
+                                              final healthBox = Hive.box<double>('hpBarValue');
+                                              double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
                                               healthBox.put('healthBarValue', currentHealth + change);
                                              
-                                              print('----------------------------Поменяли хп');
                                               setState(() {});
 
                                               Navigator.of(context).pop();
