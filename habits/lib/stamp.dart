@@ -10,7 +10,7 @@ class Stamp extends HiveObject{
   @HiveField(1)
   late DateTime time; // время добавления
   @HiveField(2)
-  late bool added; // добавлена - true / удалена - false
+  late String added; // добавлена - "a" / удалена - "d" / отмечена - "m"
 
   static int id = 0;
 

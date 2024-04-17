@@ -116,7 +116,16 @@ class _AddHabitState extends State<AddHabit> {
                                               double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
                                               healthBox.put('healthBarValue', currentHealth + change);
                                              
-                                              setState(() {});
+                                              setState(() {
+                                                boxTimestamps.put('key_${habit.id}_${Stamp.id}_marked',
+                                                  Stamp(
+                                                    habit: habit,
+                                                    time: DateTime.now(),
+                                                    added: "m"
+                                                  )
+                                                );
+                                                Stamp.id++;
+                                              });
 
                                               Navigator.of(context).pop();
                                             
@@ -143,12 +152,12 @@ class _AddHabitState extends State<AddHabit> {
                                               Stamp(
                                                   habit: habit,
                                                   time: DateTime.now(),
-                                                  added: true
+                                                  added: "a"
                                               )
                                             );
                                             Stamp.id++;
-                                            Navigator.of(context).pop();
                                           }
+                                          Navigator.of(context).pop();
                                         });
                                       },
                                       child:const Text('Добавить'),
