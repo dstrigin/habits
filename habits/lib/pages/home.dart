@@ -107,8 +107,21 @@ class _HomePageState extends State<HomePage> {
                                       setState(() {
                                         double change = hab.type ? hab.damage : -hab.damage;
                                         _updateHealthBarValue(change);  
+
+                                        boxTimestamps.put('key_${hab.id}_${Stamp.id}_marked',
+                                          Stamp(
+                                            habit: hab,
+                                            time: DateTime.now(),
+                                            added: "m"
+                                          )
+                                        );
+
+                                        Stamp.id++;
+
                                       });
+
                                       Navigator.of(context).pop();
+
                                     },
                                     child: const Icon(Icons.check)
                                 ),
@@ -120,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                       Stamp(
                                       habit: hab,
                                       time: DateTime.now(),
-                                      added: false));
+                                      added: "d"));
                                     Navigator.of(context).pop();
                                   },
                                   child: const Icon(Icons.delete),
