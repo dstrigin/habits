@@ -32,6 +32,9 @@ Future<List<Habit>> getHabits() async {
       Habit habit = Habit.fromJson(data);
       habits.add(habit);
     }
+
+    habits.sort((a, b) => a.type == true? -1 : 1);
+
   } 
   catch (error) 
   {
@@ -72,12 +75,15 @@ class _AddHabitState extends State<AddHabit> {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
                     padding: const EdgeInsets.only(
-                        top: 20, bottom: 7, left: 3, right: 5),
+                        top: 20, bottom: 20, left: 3, right: 5),
                     scrollDirection: Axis.vertical,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Habit habit = snapshot.data![index];
                       return ListTile(
+                        contentPadding: const EdgeInsets.only(
+                          top: 3, bottom: 3, left: 10, right: 5
+                        ),
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
                           width: 60,

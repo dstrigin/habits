@@ -76,6 +76,9 @@ class _HistoryPageState extends State<HistoryPage> {
                       Icon showing = icon;
 
                       return ListTile(
+                          contentPadding: const EdgeInsets.only(
+                            top: 3, bottom: 3, left: 10, right: 5
+                          ),
                           title: Text(
                             "$day/$month $hour:$min",
                             style: const TextStyle(fontSize: 24),

@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 7, left: 3, right: 5),
+            padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
             child: ValueListenableBuilder(
               valueListenable: Hive.box<double>('hpBarValue').listenable(),
               builder: (BuildContext context, hpBarValue, Widget? bar) {
@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 }
                 return LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(color),
-                  minHeight: 33,
+                  minHeight: 32,
                   value: value > 0.05 ? value : 0.05,
                 );
               },
@@ -77,11 +77,14 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
                 return ListView.builder(
-                  padding: const EdgeInsets.only(top: 15, bottom: 7, left: 5, right: 5),
+                  padding: const EdgeInsets.all(5),
                   itemCount: box.values.length,
                   itemBuilder: (context, index) {
                     Habit? hab = box.getAt(index);
                     return ListTile(
+                      contentPadding: const EdgeInsets.only(
+                          top: 3, bottom: 3, left: 10, right: 5
+                      ),
                       title: Text(hab!.id.toString(), style: const TextStyle(fontSize: 24)),
                       leading: SvgPicture.asset(
                         'assets/icons/${hab.icon}.svg',
