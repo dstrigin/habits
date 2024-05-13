@@ -35,8 +35,8 @@ Future<List<Habit>> getHabits() async {
 
     habits.sort((a, b) => a.type == true? -1 : 1);
 
-  } 
-  catch (error) 
+  }
+  catch (error)
   {
     print('Ошибка при получении привычек: $error');
   }
@@ -75,14 +75,14 @@ class _AddHabitState extends State<AddHabit> {
                   // Отображаем список привычек из базы данных
                   return ListView.builder(
                     padding: const EdgeInsets.only(
-                        top: 20, bottom: 20, left: 3, right: 5),
+                        top: 20, bottom: 20, left: 8, right: 5),
                     scrollDirection: Axis.vertical,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Habit habit = snapshot.data![index];
                       return ListTile(
                         contentPadding: const EdgeInsets.only(
-                          top: 3, bottom: 3, left: 10, right: 5
+                          top: 7, bottom: 3, left: 10, right: 5
                         ),
                         leading: SvgPicture.asset(
                           'assets/icons/${habit.icon}.svg',
@@ -105,7 +105,7 @@ class _AddHabitState extends State<AddHabit> {
                                     borderRadius: BorderRadius.all(Radius.circular(10))
                                   ),
                                   title:  Text(
-                                    habit.id.toString(), 
+                                    habit.id.toString(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24),
@@ -121,7 +121,7 @@ class _AddHabitState extends State<AddHabit> {
                                               final healthBox = Hive.box<double>('hpBarValue');
                                               double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
                                               healthBox.put('healthBarValue', currentHealth + change);
-                                             
+
                                               setState(() {
                                                 boxTimestamps.put('key_${habit.id}_${Stamp.id}_marked',
                                                   Stamp(
@@ -134,7 +134,7 @@ class _AddHabitState extends State<AddHabit> {
                                               });
 
                                               Navigator.of(context).pop();
-                                            
+
                                           },
                                         child: const Text('Отметить')
                                     ),
@@ -183,6 +183,93 @@ class _AddHabitState extends State<AddHabit> {
           ),
         ],
       ),
+      // кнопка для добавления своей привычки
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Обработка нажатия на кнопку добавления привычки
+          _showAddHabitDialog();
+        },
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+
+  // отображение диалогового окна при попытке добавления своей привычки
+  void _showAddHabitDialog() {
+    TextEditingController _nameController = TextEditingController();
+    TextEditingController _descriptionController = TextEditingController();
+    TextEditingController _factController = TextEditingController();
+    TextEditingController _damageController = TextEditingController();
+    bool _isPositive = true; // По умолчанию тип привычки положительный
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Добавить привычку'),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(labelText: 'Имя'),
+                ),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(labelText: 'Описание'),
+                ),
+                TextField(
+                  controller: _factController,
+                  decoration: InputDecoration(labelText: 'Факт'),
+                ),
+                TextField(
+                  controller: _damageController,
+                  decoration: InputDecoration(labelText: 'Урон'),
+                  keyboardType: TextInputType.number,
+                ),
+                CheckboxListTile(
+                  title: Text('Положительная привычка'),
+                  value: _isPositive,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _isPositive = value ?? false;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                String name = _nameController.text;
+                String description = _descriptionController.text;
+                String fact = _factController.text;
+                double damage = double.tryParse(_damageController.text) ?? 0.0;
+
+                Navigator.of(context).pop({
+                  'name': name,
+                  'description': description,
+                  'fact': fact,
+                  'damage': damage,
+                  'isPositive': _isPositive,
+                });
+              },
+              child: Text('Сохранить'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Отмена'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
