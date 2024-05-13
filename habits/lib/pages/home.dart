@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                               actions: [
                                 ElevatedButton(
                                     onPressed: () {
+                                      playSound(hab);
                                       setState(() {
                                         double change = hab.type ? hab.damage : -hab.damage;
                                         _updateHealthBarValue(change);  

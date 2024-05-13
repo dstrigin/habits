@@ -116,7 +116,8 @@ class _AddHabitState extends State<AddHabit> {
                                       style: const TextStyle(fontSize: 18)),
                                   actions: [
                                     ElevatedButton(
-                                        onPressed: () async {
+                                        onPressed: () {
+                                              playSound(habit);
                                               double change = habit.type ? habit.damage : -habit.damage;
                                               final healthBox = Hive.box<double>('hpBarValue');
                                               double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
