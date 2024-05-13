@@ -81,8 +81,11 @@ class _FactPageState extends State<FactPage> {
                               );
                             }
                         ),
-                        onRefresh: () => Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (_) => FactPage())),
+                        onRefresh: () async {
+                            setState(() {
+                              ind = Random().nextInt(snapshot.data!.length);
+                            });
+                        }
                     );
 
                 }}
