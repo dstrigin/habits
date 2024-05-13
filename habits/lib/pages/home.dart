@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -82,9 +81,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     Habit? hab = box.getAt(index);
                     return ListTile(
-                      contentPadding: const EdgeInsets.only(
-                          top: 3, bottom: 3, left: 10, right: 5
-                      ),
+                      contentPadding: const EdgeInsets.only(top: 3, bottom: 3, left: 10, right: 5),
                       title: Text(hab!.id.toString(), style: const TextStyle(fontSize: 24)),
                       leading: SvgPicture.asset(
                         'assets/icons/${hab.icon}.svg',
@@ -98,7 +95,9 @@ class _HomePageState extends State<HomePage> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               actionsPadding: const EdgeInsets.only(bottom: 20),
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
                               title: const Text(
                                 'Выберите действие',
                                 style: TextStyle(fontSize: 28),
@@ -106,42 +105,45 @@ class _HomePageState extends State<HomePage> {
                               ),
                               actions: [
                                 ElevatedButton(
-                                    onPressed: () {
-                                      playSound(hab);
-                                      setState(() {
-                                        double change = hab.type ? hab.damage : -hab.damage;
-                                        _updateHealthBarValue(change);  
+                                  onPressed: () {
+                                    playSound(hab);
+                                    setState(() {
+                                      double change = hab.type ? hab.damage : -hab.damage;
+                                      _updateHealthBarValue(change);
 
-                                        boxTimestamps.put('key_${hab.id}_${Stamp.id}_marked',
-                                          Stamp(
-                                            habit: hab,
-                                            time: DateTime.now(),
-                                            added: "m"
-                                          )
-                                        );
+                                      boxTimestamps.put('key_${hab.id}_${Stamp.id}_marked',
+                                        Stamp(
+                                          habit: hab,
+                                          time: DateTime.now(),
+                                          added: "m",
+                                        ),
+                                      );
 
-                                        Stamp.id++;
+                                      Stamp.id++;
+                                    });
 
-                                      });
-
-                                      Navigator.of(context).pop();
-
-                                    },
-                                    child: const Icon(Icons.check)
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Icon(Icons.check),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    box.delete(hab.key);
-                                    boxTimestamps.put(
-                                      'key_${hab.id}_removed',
-                                      Stamp(
-                                      habit: hab,
-                                      time: DateTime.now(),
-                                      added: "d"));
+                                    setState(() {
+                                      box.delete(hab.key);
+                                      boxTimestamps.put(
+                                        'key_${hab.id}_removed',
+                                        Stamp(
+                                          habit: hab,
+                                          time: DateTime.now(),
+                                          added: "d",
+                                        ),
+                                      );
+                                    });
+
                                     Navigator.of(context).pop();
                                   },
                                   child: const Icon(Icons.delete),
-                                )
+                                ),
                               ],
                               actionsAlignment: MainAxisAlignment.center,
                             );
