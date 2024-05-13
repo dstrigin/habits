@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:hive/hive.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 part 'Habit.g.dart';
 
@@ -47,3 +48,13 @@ class Habit extends HiveObject{
   );
 }
 
+void playSound(Habit h) {
+  switch (h.type) {
+    case false:
+      AudioPlayer().play(AssetSource('sounds/minus.mp3'));
+      break;
+    default:
+      AudioPlayer().play(AssetSource('sounds/plus.mp3'));
+      break;
+  }
+}
