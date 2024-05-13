@@ -2,15 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
 import 'package:habits/stamp.dart';
 import 'package:hive/hive.dart';
-import 'package:audioplayers/audioplayers.dart';
-
 import '../main.dart';
 
 class AddHabit extends StatefulWidget {
@@ -148,7 +145,6 @@ class _AddHabitState extends State<AddHabit> {
                                           {
                                             double newValue = habit.type ? habit.damage :-habit.damage;
                                             healthBarController.add(newValue);
-                                            AudioPlayer().play(AssetSource('assets/sounds/minus.mp3'));
                                             boxHabits.put('key_${habit.id}',
                                               Habit(
                                                   id:habit.id,
