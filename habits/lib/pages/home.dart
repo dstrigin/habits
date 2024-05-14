@@ -25,11 +25,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _updateHealthBarValue(double change) async {
-    setState(() {
-      final healthBox = Hive.box<double>('hpBarValue');
-      double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
-      healthBox.put('healthBarValue', currentHealth + change);
-    });
+    final healthBox = Hive.box<double>('hpBarValue');
+    double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
+    healthBox.put('healthBarValue', currentHealth + change);
   }
 
   @override
@@ -42,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
             child: ValueListenableBuilder(
               valueListenable: Hive.box<double>('hpBarValue').listenable(),
-              builder: (BuildContext context, hpBarValue, Widget? bar) {
+              builder: (BuildContext context, Box<double> hpBarValue, Widget? bar) {
                 double value = _getHealthBarValue() ?? 0.95;
                 Color color;
                 if (value >= 0.75) {

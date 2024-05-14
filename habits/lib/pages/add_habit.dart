@@ -10,7 +10,7 @@ import 'package:hive_flutter/adapters.dart';
 import '../main.dart';
 
 class AddHabit extends StatefulWidget {
-  const AddHabit({Key? key});
+  const AddHabit({Key? key}) : super(key: key);
 
   @override
   State<AddHabit> createState() => _AddHabitState();
@@ -85,7 +85,10 @@ class _AddHabitState extends State<AddHabit> {
                             ),
                             title: Text(
                               habit.id.toString(),
-                              style: const TextStyle(fontSize: 24),
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: isAdded ? Colors.grey : Colors.black, // Change color based on isAdded
+                              ),
                             ),
                             trailing: isAdded ? Icon(Icons.check, color: Colors.green) : null,
                             onTap: () {
@@ -105,6 +108,7 @@ class _AddHabitState extends State<AddHabit> {
                                     actions: [
                                       ElevatedButton(
                                         onPressed: () async {
+                                          playSound(habit);
                                           double change = habit.type ? habit.damage : -habit.damage;
                                           final healthBox = Hive.box<double>('hpBarValue');
                                           double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
