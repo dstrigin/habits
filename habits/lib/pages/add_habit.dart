@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:habits/boxes.dart';
 import 'package:habits/Habit.dart';
 import 'package:habits/elements/appBars.dart';
-import 'package:habits/stamp.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import '../main.dart';
+import '../stamp.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key}) : super(key: key);
@@ -129,35 +129,39 @@ class _AddHabitState extends State<AddHabit> {
                                         },
                                         child: const Text('Отметить'),
                                       ),
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            if (!box.containsKey('key_${habit.id}')) {
-                                              double newValue = habit.type ? habit.damage : -habit.damage;
-                                              healthBarController.add(newValue);
-                                              box.put('key_${habit.id}',
-                                                Habit(
-                                                  id: habit.id,
-                                                  description: habit.description,
-                                                  damage: habit.damage,
-                                                  type: habit.type,
-                                                  icon: habit.icon,
-                                                ),
-                                              );
-                                              boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
-                                                Stamp(
-                                                  habit: habit,
-                                                  time: DateTime.now(),
-                                                  added: "a",
-                                                ),
-                                              );
-                                              Stamp.id++;
-                                            }
-                                            Navigator.of(context).pop();
-                                          });
-                                        },
-                                        child: const Text('Добавить'),
-                                      ),
+                                      if (!isAdded)
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            setState(() {
+                                              if (!box.containsKey('key_${habit.id}')) {
+                                                double newValue = habit.type ? habit.damage : -habit.damage;
+                                                final healthBox = Hive.box<double>('hpBarValue');
+                                                double currentHealth = healthBox.get('healthBarValue') ?? 0.95;
+                                                healthBox.put('healthBarValue', currentHealth + newValue);
+
+                                                box.put('key_${habit.id}',
+                                                  Habit(
+                                                    id: habit.id,
+                                                    description: habit.description,
+                                                    damage: habit.damage,
+                                                    type: habit.type,
+                                                    icon: habit.icon,
+                                                  ),
+                                                );
+                                                boxTimestamps.put('key_${habit.id}_${Stamp.id}_added',
+                                                  Stamp(
+                                                    habit: habit,
+                                                    time: DateTime.now(),
+                                                    added: "a",
+                                                  ),
+                                                );
+                                                Stamp.id++;
+                                              }
+                                              Navigator.of(context).pop();
+                                            });
+                                          },
+                                          child: const Text('Добавить'),
+                                        ),
                                     ],
                                     actionsAlignment: MainAxisAlignment.spaceAround,
                                   );
