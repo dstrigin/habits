@@ -59,7 +59,26 @@ class _HistoryPageState extends State<HistoryPage> {
                           ? '0${stamp?.time.minute}'
                           : '${stamp?.time.minute}';
 
+                      Icon icon;
+
+                      switch (stamp?.added) {
+                        case "a":
+                          icon = const Icon(Icons.add);
+                          break;
+                        case "d":
+                          icon = const Icon(Icons.delete);
+                          break;
+                        default:
+                          icon = const Icon(Icons.check);
+                          break;
+                      }
+
+                      Icon showing = icon;
+
                       return ListTile(
+                          contentPadding: const EdgeInsets.only(
+                            top: 3, bottom: 3, left: 10, right: 5
+                          ),
                           title: Text(
                             "$day/$month $hour:$min",
                             style: const TextStyle(fontSize: 24),
@@ -70,9 +89,8 @@ class _HistoryPageState extends State<HistoryPage> {
                             height: 60,
                             alignment: Alignment.centerLeft,
                           ),
-                          trailing: stamp!.added
-                              ? const Icon(Icons.add)
-                              : const Icon(Icons.remove));
+                          trailing: showing
+                      );
                     });
               },
             ),

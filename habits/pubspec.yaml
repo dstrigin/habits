@@ -15,6 +15,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  audioplayers: ^5.2.1
+
   cupertino_icons: ^1.0.2
 
   persistent_bottom_nav_bar: ^5.0.2
@@ -40,6 +42,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/sounds/
 
   fonts:
    - family: San Francisco

@@ -29,7 +29,6 @@ class DocumentationPage extends StatelessWidget {
               style: TextStyle(fontSize: 24, color: Colors.black87),
             ),
             const SizedBox(height: 16),
-            const Divider(color: Colors.cyan),
             const Text(
               'На домашнем экране будут отображаться все привычки, которые у вас есть на данный момент.',
               style: TextStyle(fontSize: 24, color: Colors.black87),
@@ -46,12 +45,17 @@ class DocumentationPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Об истории добавления привычек и ежедневных изменениях полосы здоровья вы сможете посмотреть на второй странице приложения - "история".',
+              'Когда вы выполняете какое-либо действие, связанное с определенной привычкой, нажмите на эту привычку на главном окне, если она регулярна для вас, или на экране со всеми привычками, выберете кнопку добавить. Полоса здоровья изменится.',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Об истории добавления привычек и изменениях полосы здоровья вы сможете посмотреть на второй странице приложения - "история".',
               style: TextStyle(fontSize: 24, color: Colors.black87),
             ),
             const SizedBox(height: 16),
             const Text(
-              'Мы за то, чтобы вы узнавали что-то новое и интересное, поэтому пользователю предлагается ознакомиться с интересными фактами о какой-либо привычке на четвертой странице - "факт". Информация на ней будет обновляться время от времени, так что вы всегда сможете подчерпнуть что-то для себя.',
+              'Мы за то, чтобы вы узнавали что-то новое и интересное, поэтому пользователю предлагается ознакомиться с интересными фактами о какой-либо привычке на четвертой странице - "факт". Информация на ней будет обновляться каждый раз, когда вы заходите в приложение, так что вы всегда сможете подчерпнуть что-то для себя. Так же вы можете сами обновить эту информацию, потянув экран вниз.',
               style: TextStyle(fontSize: 24, color: Colors.black87),
             ),
             const SizedBox(height: 16),
@@ -59,7 +63,6 @@ class DocumentationPage extends StatelessWidget {
               'Если у вас есть вопросы или пожелания по поводу работы приложения - я с радостью готов с вами контактировать!',
               style: TextStyle(fontSize: 24, color: Colors.black87),
             ),
-            const Divider(color: Colors.cyan),
             const SizedBox(height: 8),
             GestureDetector(
               onTap: () {

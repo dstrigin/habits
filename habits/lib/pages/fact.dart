@@ -42,43 +42,52 @@ class _FactPageState extends State<FactPage> {
                     );
                   } else {
                     int ind = Random().nextInt(snapshot.data!.length);
-                    return ListView.builder(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 15, left: 20, right: 20),
-                        scrollDirection: Axis.vertical,
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          Habit habit = snapshot.data![ind];
-                          return ListBody(
-                            children: [
-                              Column(
+                    return RefreshIndicator(
+                      color: Colors.lightBlueAccent,
+                        child: ListView.builder(
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 15, left: 20, right: 20),
+                            scrollDirection: Axis.vertical,
+                            itemCount: 1,
+                            itemBuilder: (context, index) {
+                              Habit habit = snapshot.data![ind];
+                              return ListBody(
                                 children: [
-                                  Text(
-                                    '${habit.id}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 32
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/${habit.icon}.svg',
-                                    width: 240,
-                                    height: 240,
-                                  ),
-                                  Text(
-                                    '\n${habit.fact}\n',
-                                    style: const TextStyle(
-                                        fontSize: 24
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        habit.id,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 32
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/icons/${habit.icon}.svg',
+                                        width: 240,
+                                        height: 240,
+                                      ),
+                                      Text(
+                                        '\n${habit.fact}\n',
+                                        style: const TextStyle(
+                                            fontSize: 24
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          );
+                              );
+                            }
+                        ),
+                        onRefresh: () async {
+                            setState(() {
+                              ind = Random().nextInt(snapshot.data!.length);
+                            });
                         }
                     );
+
                 }}
               )
           )
